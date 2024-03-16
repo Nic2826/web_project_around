@@ -1,0 +1,88 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 18px;
+  box-sizing: border-box;
+}
+.cards__item {
+  width: 282px;
+  height: 361px;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  position: relative;
+}
+
+.cards__item-image {
+  height: 282px;
+  border-radius: 10px;
+}
+
+.cards__footer-name {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.cards__footer-fav-button {
+  background-image: url(../images/fav.png);
+  background-color: transparent;
+  width: 21px;
+  height: 19px;
+  border: none;
+  cursor: pointer;
+}
+
+.cards__footer-fav-button:hover{
+  opacity: 50%;
+}
+
+.cards__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.cards__delete{
+  background-image: url(../images/delete.png);
+  background-color: transparent;
+  width: 18px;
+  height: 19.3px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+   top: 18;
+   right: 15; 
+}
+
+.cards__delete:hover{
+  background-image: url(../images/delete-off.png);
+}
+
+@media screen and (max-width: 930px) {
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+  .cards__item {
+    justify-self: center;
+  }
+
+}
+
+@media screen and (max-width: 640px){
+  .cards{
+  display: flex;
+  flex-direction: column;
+}
+.cards__item {
+  width: 282px;
+  margin: auto;
+}
+}
