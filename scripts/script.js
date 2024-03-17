@@ -11,7 +11,6 @@ const popUpPlace = document.querySelector(".form__container-place");
 const AddButton = document.querySelector("#add-button");
 
 const CloseButtons = document.querySelectorAll(".form__close-icon");
-const SaveButton = document.querySelector("#save-button");
 
 EditButton.addEventListener("click", function openProfileEdit() {
   popUpProfile.classList.add("popup_open");
