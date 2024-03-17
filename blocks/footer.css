@@ -6,8 +6,8 @@
   font-weight: 400;
 }
 
-@media screen and (max-width: 930px){
-  .footer__copyright{
+@media screen and (max-width: 930px) {
+  .footer__copyright {
     margin-left: 27px;
-  } 
+  }
 }
