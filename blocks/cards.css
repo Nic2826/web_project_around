@@ -37,8 +37,10 @@
   cursor: pointer;
 }
 
-.cards__footer-fav-button:hover{
-  opacity: 50%;
+@media (hover: hover) {
+  .cards__footer-fav-button:hover {
+    opacity: 50%;
+  }
 }
 
 .cards__footer {
@@ -48,7 +50,7 @@
   align-items: center;
 }
 
-.cards__delete{
+.cards__delete {
   background-image: url(../images/delete.png);
   background-color: transparent;
   width: 18px;
@@ -56,12 +58,14 @@
   border: none;
   cursor: pointer;
   position: absolute;
-   top: 18;
-   right: 15; 
+  top: 18;
+  right: 15;
 }
 
-.cards__delete:hover{
-  background-image: url(../images/delete-off.png);
+@media (hover: hover){
+.cards__delete:hover {
+  opacity: 60%;
+}
 }
 
 @media screen and (max-width: 930px) {
@@ -73,16 +77,15 @@
   .cards__item {
     justify-self: center;
   }
-
 }
 
-@media screen and (max-width: 640px){
-  .cards{
-  display: flex;
-  flex-direction: column;
-}
-.cards__item {
-  width: 282px;
-  margin: auto;
-}
+@media screen and (max-width: 640px) {
+  .cards {
+    display: flex;
+    flex-direction: column;
+  }
+  .cards__item {
+    width: 282px;
+    margin: auto;
+  }
 }

@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,10 +34,10 @@
           <div class="profile__info">
             <h1 class="profile__info-name">Jacques Cousteau</h1>
             <p class="profile__info-description">Explorador</p>
-            <button class="profile__edit-button" type="button"></button>
+            <button id="edit-button" class="profile__edit-button" type="button"></button>
           </div>
 
-          <button class="profile__add-button" type="button"></button>
+          <button id="add-button" class="profile__add-button" type="button"></button>
         </section>
 
         <section class="cards">
@@ -49,9 +49,9 @@
             />
             <div class="cards__footer">
               <p class="cards__footer-name">Valle de Yosemite</p>
-              <button class="cards__footer-fav-button" type="button"></button>
+              <button id="fav-button" class="cards__footer-fav-button" type="button"></button>
             </div>
-            <button class="cards__delete" type="button"></button>
+            <button id="delete-button" class="cards__delete" type="button"></button>
           </div>
 
           <div class="cards__item">
@@ -62,9 +62,9 @@
             />
             <div class="cards__footer">
               <p class="cards__footer-name">Lago Louise</p>
-              <button class="cards__footer-fav-button" type="button"></button>
+              <button id="fav-button" class="cards__footer-fav-button" type="button"></button>
             </div>
-            <button class="cards__delete" type="button"></button>
+            <button id="delete-button" class="cards__delete" type="button"></button>
           </div>
 
           <div class="cards__item">
@@ -75,9 +75,9 @@
             />
             <div class="cards__footer">
               <p class="cards__footer-name">Montañas Calvas</p>
-              <button class="cards__footer-fav-button" type="button"></button>
+              <button id="fav-button" class="cards__footer-fav-button" type="button"></button>
             </div>
-            <button class="cards__delete" type="button"></button>
+            <button id="delete-button" class="cards__delete" type="button"></button>
           </div>
 
           <div class="cards__item">
@@ -88,9 +88,9 @@
             />
             <div class="cards__footer">
               <p class="cards__footer-name">Latemar</p>
-              <button class="cards__footer-fav-button" type="button"></button>
+              <button id="fav-button" class="cards__footer-fav-button" type="button"></button>
             </div>
-            <button class="cards__delete" type="button"></button>
+            <button id="delete-button" class="cards__delete" type="button"></button>
           </div>
 
           <div class="cards__item">
@@ -101,9 +101,9 @@
             />
             <div class="cards__footer">
               <p class="cards__footer-name">Vanois National</p>
-              <button class="cards__footer-fav-button" type="button"></button>
+              <button id="fav-button" class="cards__footer-fav-button" type="button"></button>
             </div>
-            <button class="cards__delete" type="button"></button>
+            <button id="delete-button" class="cards__delete" type="button"></button>
           </div>
 
           <div class="cards__item">
@@ -114,39 +114,93 @@
             />
             <div class="cards__footer">
               <p class="cards__footer-name">Lago di Braies</p>
-              <button class="cards__footer-fav-button" type="button"></button>
+              <button id="fav-button" class="cards__footer-fav-button" type="button"></button>
             </div>
-            <button class="cards__delete" type="button"></button>
+            <button
+              id="delete-button"
+              class="cards__delete"
+              type="button"
+            ></button>
           </div>
         </section>
 
-        <div class="form__container">
+        <div class="form__container form__container-profile">
           <form class="form__admin">
             <img
               src="./images/close.png"
-              alt="Closeicon"
-              class="form__close-icon"
-              id="closeiconplace"
+              alt="Close icon"
+              class="form__close-icon form__close-icon-profile"
+              id="close-icon"
+            />
+            <div>
+              <fieldset class="form__input-container">
+                <h2 class="form__heading">Editar Perfil</h2>
+                <input
+                  id="text-input-name"
+                  class="form__profile-text"
+                  type="text"
+                  placeholder="Nombre"
+                  value="Jacques Cousteau"
+                />
+                <div class="form__line"></div>
+                <input
+                  id="text-input-about"
+                  class="form__profile-text form__profile-text-about"
+                  type="text"
+                  placeholder="Acerca de mí"
+                  value="Explorador"
+                />
+                <div class="form__line"></div>
+                <input
+                  id="save-button"
+                  class="form__button-save"
+                  type="submit"
+                  value="Crear"
+                />
+              </fieldset>
+            </div>
+          </form>
+        </div>
+
+        <!-- ------------------------PLACES---------------------- -->
+        <div class="form__container form__container-place">
+          <form class="form__admin">
+            <img
+              src="./images/close.png"
+              alt="Close icon"
+              class="form__close-icon form__close-icon-place"
+              id="close-icon"
             />
             <div>
               <fieldset class="form__input-container">
                 <h2 class="form__heading">Nuevo lugar</h2>
-                <input class="form__text" type="text" placeholder="Título" />
+                <input
+                  id="#text-input"
+                  class="form__place-text"
+                  type="text"
+                  placeholder="Título"
+                />
                 <div class="form__line"></div>
                 <input
+                  id="url-input"
                   class="form__text form__text-link"
                   type="url"
                   placeholder="Enlace a la imagen"
                 />
                 <div class="form__line"></div>
-                <input class="form__button" type="submit" value="Crear" />
+                <input
+                  id="save-button"
+                  class="form__button-save"
+                  type="submit"
+                  value="Crear"
+                />
               </fieldset>
             </div>
           </form>
         </div>
 
         <footer class="footer">
-          <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+          <p class="footer__copyright">&copy; 2024 Nicolle Algarín</p>
         </footer>
       </main>
     </div>

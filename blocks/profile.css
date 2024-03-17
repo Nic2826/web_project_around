@@ -33,8 +33,10 @@
   grid-row: 1;
 }
 
-.profile__edit-button:hover {
-  opacity: 60%;
+@media (hover: hover) {
+  .profile__edit-button:hover {
+    opacity: 60%;
+  }
 }
 
 .profile__add-button {
@@ -50,8 +52,10 @@
   cursor: pointer;
 }
 
-.profile__add-button:hover {
-  opacity: 60%;
+@media (hover: hover) {
+  .profile__add-button:hover {
+    opacity: 60%;
+  }
 }
 
 .profile__info-name {
@@ -73,7 +77,7 @@
   grid-row: 2;
 }
 
-@media screen and (max-width: 930px){
+@media screen and (max-width: 930px) {
   .profile {
     display: flex;
     flex-direction: column;
@@ -85,22 +89,21 @@
     margin: 0 auto 14px;
   }
 
-  .profile__info{
+  .profile__info {
     margin: 0 auto 36px;
   }
 
-
-  .profile__info-description{
+  .profile__info-description {
     margin: auto;
   }
 
-  .profile__add-button{
+  .profile__add-button {
     margin: 0 auto 36px;
     width: 282px;
   }
 }
 
-@media screen and (max-width: 460px){
+@media screen and (max-width: 460px) {
   .profile__info-name {
     font-size: 22px;
     margin: 0 0 14px;
@@ -113,7 +116,7 @@
     margin: 4px 0 10px 12px;
   }
 
-  .profile__info-description{
+  .profile__info-description {
     font-size: 14px;
   }
 }
