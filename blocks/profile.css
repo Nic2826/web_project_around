@@ -17,6 +17,17 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
 }
+.profile__info-name{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.profile__info-description{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 .profile__edit-button {
   background-image: url(../images/edit.png);
