@@ -1,5 +1,4 @@
-/* ----PERFIL-------- */
-.form__container {
+.form {
   visibility: hidden;
   height: 330px;
   width: 430px;
@@ -18,8 +17,6 @@
 .form__profile-text-about {
   margin-top: 30px;
 }
-
-/* -------------PLACES------------ */
 
 .form__close-icon {
   position: absolute;

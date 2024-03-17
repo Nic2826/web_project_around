@@ -1,7 +1,7 @@
 const EditButton = document.querySelector("#edit-button");
 const NameInput = document.querySelector("#text-input-name");
 const AboutInput = document.querySelector("#text-input-about");
-const popUpProfile = document.querySelector(".form__container-profile");
+const popUpProfile = document.querySelector(".form-profile");
 const formContainer = document.querySelector(".form__admin");
 
 const ProfileName = document.querySelector(".profile__info-name");
