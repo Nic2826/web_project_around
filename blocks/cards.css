@@ -58,8 +58,8 @@
   border: none;
   cursor: pointer;
   position: absolute;
-  top: 18;
-  right: 15;
+  top: 18px;
+  right: 15px;
 }
 
 @media (hover: hover) {
@@ -68,7 +68,7 @@
   }
 }
 
-@media screen and (max-width: 930px) {
+@media screen and (max-width: 880px) {
   .cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

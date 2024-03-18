@@ -1,40 +1,40 @@
-const EditButton = document.querySelector("#edit-button");
-const NameInput = document.querySelector("#text-input-name");
-const AboutInput = document.querySelector("#text-input-about");
-const popUpProfile = document.querySelector(".form-profile");
+const editButton = document.querySelector("#edit-button");
+const nameInput = document.querySelector("#text-input-name");
+const aboutInput = document.querySelector("#text-input-about");
+const popupProfile = document.querySelector(".form-profile");
 const formContainer = document.querySelector(".form__admin");
 
-const ProfileName = document.querySelector(".profile__info-name");
-const ProfileAbout = document.querySelector(".profile__info-description");
+const profileName = document.querySelector(".profile__info-name");
+const profileAbout = document.querySelector(".profile__info-description");
 
-const popUpPlace = document.querySelector(".form__container-place");
-const AddButton = document.querySelector("#add-button");
+const popupPlace = document.querySelector(".form-place");
+const addButton = document.querySelector("#add-button");
 
-const CloseButtons = document.querySelectorAll(".form__close-icon");
+const closeButton = document.querySelectorAll(".form__close-icon");
 
-EditButton.addEventListener("click", function openProfileEdit() {
-  popUpProfile.classList.add("popup_open");
-  NameInput.value.value = ProfileName.textContent;
-  AboutInput.value = ProfileAbout.textContent;
+editButton.addEventListener("click", function openProfileEdit() {
+  popupProfile.classList.add("popup_open");
+  nameInput.value.value = profileName.textContent;
+  aboutInput.value = profileAbout.textContent;
 });
 
-AddButton.addEventListener("click", function openPlaceEdit() {
-  popUpPlace.classList.add("popup_open");
+addButton.addEventListener("click", function openPlaceEdit() {
+  popupPlace.classList.add("popup_open");
 });
 
-CloseButtons.forEach((item) => {
+closeButton.forEach((item) => {
   item.addEventListener("click", function close() {
-    popUpProfile.classList.remove("popup_open");
-    popUpPlace.classList.remove("popup_open");
+    popupProfile.classList.remove("popup_open");
+    popupPlace.classList.remove("popup_open");
   });
 });
 
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  ProfileName.textContent = NameInput.value;
-  ProfileAbout.textContent = AboutInput.value;
-  popUpProfile.classList.remove("popup_open");
+  profileName.textContent = nameInput.value;
+  profileAbout.textContent = aboutInput.value;
+  popupProfile.classList.remove("popup_open");
 }
 
 formContainer.addEventListener("submit", handleProfileFormSubmit);

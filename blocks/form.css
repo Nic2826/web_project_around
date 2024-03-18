@@ -5,7 +5,7 @@
   background-color: white;
   border-radius: 10px;
   position: fixed;
-  top: 195;
+  top: 195px;
   left: calc((100vw - 430px) / 2);
 }
 
@@ -20,8 +20,8 @@
 
 .form__close-icon {
   position: absolute;
-  top: -40;
-  left: 425;
+  top: -40px;
+  left: 425px;
   cursor: pointer;
 }
 
@@ -100,7 +100,7 @@
     height: 322px;
     width: 282px;
     position: fixed;
-    top: 168;
+    top: 168px;
     left: calc((100vw - 282px) / 2);
   }
 
@@ -131,8 +131,8 @@
     width: 26px;
     height: 26px;
     position: absolute;
-    top: -40;
-    left: 243;
+    top: -40px;
+    left: 243px;
     cursor: pointer;
   }
 }
