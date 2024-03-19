@@ -96,15 +96,13 @@
 
   .profile__info {
     margin: 0 auto 36px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
   }
 
-  .profile__edit-button{
+  .profile__edit-button {
     margin: 16px 0 16px 12px;
-  }
-
-  .profile__info-description {
-    margin: auto;
   }
 
   .profile__add-button {
