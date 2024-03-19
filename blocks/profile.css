@@ -96,6 +96,11 @@
 
   .profile__info {
     margin: 0 auto 36px;
+    overflow: hidden;
+  }
+
+  .profile__edit-button{
+    margin: 16px 0 16px 12px;
   }
 
   .profile__info-description {
