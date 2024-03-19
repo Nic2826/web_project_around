@@ -96,7 +96,7 @@
 }
 
 @media screen and (max-width: 640px) {
-  .form__container {
+  .form {
     height: 322px;
     width: 282px;
     position: fixed;
