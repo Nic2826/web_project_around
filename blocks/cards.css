@@ -5,6 +5,7 @@
   grid-gap: 18px;
   box-sizing: border-box;
 }
+
 .cards__item {
   width: 282px;
   height: 361px;
@@ -16,7 +17,14 @@
 
 .cards__item-image {
   height: 282px;
+  width: 100% ;
   border-radius: 10px;
+  cursor: pointer;
+}
+
+.cards__footer {
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .cards__footer-name {
@@ -29,24 +37,38 @@
 }
 
 .cards__footer-fav-button {
-  background-image: url(../images/fav.png);
-  background-color: transparent;
+  background: transparent url(../images/fav.png) center no-repeat;
   width: 21px;
   height: 19px;
   border: none;
   cursor: pointer;
+  padding-right:20px;
 }
+
 
 @media (hover: hover) {
   .cards__footer-fav-button:hover {
     opacity: 50%;
+    transform: scale(1.1);
+    transition: 0.3s;
   }
+}
+
+.cards__footer-fav-button_active {
+  opacity: 1;
+  background: url(../images/fulled-heart.jpg)
+    center no-repeat;
+    transform: scale(1.1);
+}
+
+.popup_card{
+  visibility: hidden;
 }
 
 .cards__footer {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 
