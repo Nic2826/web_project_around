@@ -83,7 +83,7 @@ function createCards(placeName, link) {
       evt.preventDefault();
       popupImage.classList.add("popup_open");
       popupImage.querySelector(".popup__image").src = link;
-      popupImage.querySelector(".popup__title").textContent = placeName;  
+      popupImage.querySelector(".popup__title").textContent = placeName;
     });
 
   return cardElement;
@@ -107,7 +107,8 @@ function handleProfileFormSubmit(evt) {
 
   if (nameInput.value === "" || aboutInput.value === "") {
     alert("Por favor, rellene todos los campos");
-    return;}
+    return;
+  }
 
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
@@ -131,4 +132,3 @@ function handlePlaceFormSubmit(evt) {
 }
 
 popupPlace.addEventListener("submit", handlePlaceFormSubmit);
-

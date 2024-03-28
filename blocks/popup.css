@@ -4,7 +4,6 @@
   top: 195px;
   left: calc((100vw - 430px) / 2);
   transition: all 200ms ease;
-  
 }
 
 /* .popup__overlay {
@@ -18,7 +17,7 @@
   z-index: 2;
 } */
 
-.popup__content{
+.popup__content {
   z-index: 3;
   height: 330px;
   width: 430px;
@@ -26,8 +25,7 @@
   border-radius: 10px;
 }
 
-
-.popup__content-image{
+.popup__content-image {
   z-index: 3;
   max-height: 90vh;
   max-width: 90vw;
