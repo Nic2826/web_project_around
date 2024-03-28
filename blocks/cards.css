@@ -25,6 +25,10 @@
 .cards__footer {
   padding: 0 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .cards__footer-name {
@@ -61,13 +65,6 @@
 
 .popup_card {
   visibility: hidden;
-}
-
-.cards__footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .cards__delete {
