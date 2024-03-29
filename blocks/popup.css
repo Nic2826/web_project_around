@@ -162,7 +162,7 @@
 
   .popup__heading {
     font-size: 18px;
-    margin: 34px 0 54px;
+    margin: 25px 0 54px;
   }
 
   .popup__text {
@@ -177,6 +177,7 @@
   .popup__button-save {
     height: 46px;
     width: 238px;
+    margin-top: 46px;
   }
 
   .popup__close-icon {
@@ -186,13 +187,5 @@
     top: -40px;
     left: 243px;
     cursor: pointer;
-  }
-
-  .popup__button-save {
-    margin-top: 46px;
-  }
-
-  .popup__heading {
-    margin-top: 25px;
   }
 }
