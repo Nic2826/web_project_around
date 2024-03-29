@@ -32,9 +32,6 @@
   top: 90px;
   left: calc((100vw - 75vw) / 2);
   transition: all 200ms ease;
-  margin-top: 0;
-  display: flex;
-  justify-content: center;
 }
 
 .popup__image {
@@ -45,10 +42,13 @@
   justify-content: center;
 }
 
-.popup__close-icon-image {
+.popup__close-icon {
   width: 26px;
   height: 26px;
   position: relative;
+  top: -40px;
+  left: 400px;
+  cursor: pointer;
 }
 
 .popup_open {
@@ -57,14 +57,6 @@
 
 .popup__input-about {
   margin-top: 30px;
-}
-
-.popup__close-icon {
-  z-index: 3;
-  position: relative;
-  top: -40px;
-  left: 400px;
-  cursor: pointer;
 }
 
 @media (hover: hover) {
@@ -194,5 +186,13 @@
     top: -40px;
     left: 243px;
     cursor: pointer;
+  }
+
+  .popup__button-save {
+    margin-top: 46px;
+  }
+
+  .popup__heading {
+    margin-top: 25px;
   }
 }

@@ -1,3 +1,4 @@
+const cards = document.querySelectorAll(".cards__item");
 const editButton = document.querySelector("#edit-button");
 const nameInput = document.querySelector("#text-input-name");
 const aboutInput = document.querySelector("#text-input-about");
@@ -16,7 +17,6 @@ const linkUrl = document.querySelector(".cards__item-image");
 
 const popupImage = document.querySelector("#image-popup");
 const closeButton = document.querySelectorAll(".popup__close-icon");
-
 const cardsContainer = document.querySelector(".cards");
 
 editButton.addEventListener("click", function openProfileEdit() {
