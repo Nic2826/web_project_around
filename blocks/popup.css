@@ -42,13 +42,11 @@
 .popup__close-icon {
   width: 26px;
   height: 26px;
-  position: relative;
+  position: absolute;
   top: -40px;
-  left: 400px;
+  right: -40px;
   cursor: pointer;
 }
-
-
 
 .popup_open {
   visibility: visible;
