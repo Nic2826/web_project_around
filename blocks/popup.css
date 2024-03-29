@@ -1,8 +1,7 @@
 .popup {
   visibility: hidden;
-  position: fixed;
-  top: 195px;
-  left: calc((100vw - 430px) / 2);
+  display: flex;
+  justify-content: center;
   transition: all 200ms ease;
 }
 
@@ -18,6 +17,8 @@
 }
 
 .popup__content {
+  position: fixed;
+  top: 200px;
   height: 330px;
   width: 430px;
   background-color: white;
@@ -26,18 +27,14 @@
   padding-top: 0;
 }
 
-.popup-card {
-  visibility: hidden;
+.popup__content-image {
   position: fixed;
   top: 90px;
-  left: calc((100vw - 75vw) / 2);
-  transition: all 200ms ease;
 }
 
 .popup__image {
   max-width: 75vw;
   max-height: 75vh;
-  position: relative;
   display: flex;
   justify-content: center;
 }
@@ -50,6 +47,8 @@
   left: 400px;
   cursor: pointer;
 }
+
+
 
 .popup_open {
   visibility: visible;
