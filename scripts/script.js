@@ -36,19 +36,19 @@ const initialCards = [
   },
   {
     placeName: "Montañas Calvas",
-    link: "../images/Montañas-Calvas.jpg",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/bald-mountains.jpg",
   },
   {
     placeName: "Latemar",
-    link: "../images/Latemar.jpg",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
   },
   {
     placeName: "Parque Nacional de la Vanoise",
-    link: "../images/Vanois-National.jpg",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
   },
   {
     placeName: "Lago di Braies",
-    link: "../images/Lago-di-Braies.jpg",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
   },
 ];
 
