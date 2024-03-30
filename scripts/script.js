@@ -1,13 +1,4 @@
 const cards = document.querySelectorAll(".cards__item");
-const editButton = document.querySelector("#edit-button");
-const nameInput = document.querySelector("#text-input-name");
-const aboutInput = document.querySelector("#text-input-about");
-const popupProfile = document.querySelector(".popup-profile");
-const formContainer = document.querySelector(".popup__container");
-
-const profileName = document.querySelector(".profile__info-name");
-const profileAbout = document.querySelector(".profile__info-description");
-
 const popupPlace = document.querySelector(".popup-place");
 const addButton = document.querySelector("#add-button");
 const placeInput = document.querySelector("#text-input-place");
@@ -15,9 +6,17 @@ const linkInput = document.querySelector("#url-input");
 const placeName = document.querySelector(".cards__footer-name");
 const linkUrl = document.querySelector(".cards__item-image");
 
+const editButton = document.querySelector("#edit-button");
+const nameInput = document.querySelector("#text-input-name");
+const aboutInput = document.querySelector("#text-input-about");
+const profileName = document.querySelector(".profile__info-name");
+const profileAbout = document.querySelector(".profile__info-description");
+const popupProfile = document.querySelector(".popup-profile");
+
 const popupImage = document.querySelector("#image-popup");
-const closeButton = document.querySelectorAll(".popup__close-icon");
 const cardsContainer = document.querySelector(".cards");
+
+const closeButton = document.querySelectorAll(".popup__close-icon");
 
 editButton.addEventListener("click", function openProfileEdit() {
   popupProfile.classList.add("popup_open");
@@ -65,6 +64,7 @@ function createCards(placeName, link) {
 
   cardElement.querySelector(".cards__item-image").src = link;
   cardElement.querySelector(".cards__footer-name").textContent = placeName;
+  cardElement.querySelector(".cards__item-image").alt = "Foto de " + placeName;
 
   cardElement
     .querySelector(".cards__delete")
@@ -72,8 +72,8 @@ function createCards(placeName, link) {
       evt.target.closest(".cards__item").remove();
     });
 
-  const favButton = cardElement.querySelector(".cards__footer-fav-button");
-  favButton.addEventListener("click", function (evt) {
+  const likeButton = cardElement.querySelector(".cards__footer-fav-button");
+  likeButton.addEventListener("click", function (evt) {
     evt.target.classList.toggle("cards__footer-fav-button_active");
   });
 
@@ -84,6 +84,7 @@ function createCards(placeName, link) {
       popupImage.classList.add("popup_open");
       popupImage.querySelector(".popup__image").src = link;
       popupImage.querySelector(".popup__title").textContent = placeName;
+      popupImage.querySelector(".popup__image").alt = placeName;
     });
 
   return cardElement;
@@ -115,7 +116,7 @@ function handleProfileFormSubmit(evt) {
   popupProfile.classList.remove("popup_open");
 }
 
-formContainer.addEventListener("submit", handleProfileFormSubmit);
+popupProfile.addEventListener("submit", handleProfileFormSubmit);
 
 function handlePlaceFormSubmit(evt) {
   evt.preventDefault();
