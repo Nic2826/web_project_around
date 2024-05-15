@@ -13,7 +13,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
 }
 
 .popup__content {
@@ -25,11 +25,13 @@
   border-radius: 10px;
   margin-top: 0;
   padding-top: 0;
+  z-index: 2;
 }
 
 .popup__content-image {
   position: fixed;
   top: 90px;
+  z-index: 2;
 }
 
 .popup__image {
@@ -94,8 +96,23 @@
   line-height: 30px;
 }
 
+.popup__input:valid{
+  border-bottom: 1px solid green;
+}
+
+.popup__input:invalid{
+  border-bottom: 1px solid red;
+}
+
 .popup__input-link {
   margin-top: 30px;
+}
+
+.popup__input-error{
+  font-size: 12px;
+  font-weight: 400;
+  font-family: Inter;
+  color: #FF0000;
 }
 
 .popup__line {
@@ -128,6 +145,10 @@
   margin-top: 48px;
   border-radius: 2px;
   cursor: pointer;
+}
+
+.popup__button-save_inactive{
+  background-color: grey;
 }
 
 @media (hover: hover) {
@@ -175,6 +196,11 @@
     height: 46px;
     width: 238px;
     margin-top: 46px;
+  }
+
+  .popup__button-save_inactive{
+    color: #c4c4c4;
+  
   }
 
   .popup__close-icon {
