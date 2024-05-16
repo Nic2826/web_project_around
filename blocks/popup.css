@@ -148,7 +148,10 @@
 }
 
 .popup__button-save_inactive{
-  background-color: grey;
+  background-color: white;
+  color: gray;
+  border: 1px gray solid;
+  pointer-events: none;
 }
 
 @media (hover: hover) {

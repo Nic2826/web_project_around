@@ -28,19 +28,18 @@ const showInputError = (formElement, inputElement, errorMessage) => {
   };
   
   const toggleButtonState = (inputList, buttonElement) => {
-    console.log(hasInvalidInput(inputList));
     if (hasInvalidInput(inputList)) {
-        console.log("boton deberia estar INACIVO");
+        buttonElement.disabled = true;
       buttonElement.classList.add("popup__button-save_inactive");
     } else {
-        console.log("debería ACTIVAR boton");
       buttonElement.classList.remove("popup__button-save_inactive");
+      buttonElement.disabled = false;
     }
   };
   
   const setEventListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll(".popup__input-place"));
-  const buttonElement = formElement.querySelector(".popup__button-save-place");
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  const buttonElement = formElement.querySelector(".popup__button-save");
     toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", function () {
@@ -66,10 +65,11 @@ const showInputError = (formElement, inputElement, errorMessage) => {
   };
   
   enableValidation({
-    // formSelector: ".popup__admin",
-    // inputSelector: ".popup__input",
-    // submitButtonSelector: ".popup__button-save",
-    // inactiveButtonClass: "popup__button-save_disabled",
-    // inputErrorClass: "popup__input_type_error",
-    // errorClass: "popup__error_visible"
+    formSelector: ".popup__admin",
+    inputSelector: ".popup__input",
+    submitButtonSelector: ".popup__button-save",
+    inactiveButtonClass: "popup__button-save_disabled",
+    inputErrorClass: "popup__input_type_error",
+    errorClass: "popup__error_visible"
   });
+
