@@ -1,9 +1,10 @@
+import Card from "./card.js";
+import FormValidator from "./FormValidator.js";
+
 const popupPlace = document.querySelector(".popup-place");
 const addButton = document.querySelector("#add-button");
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
-const placeName = document.querySelector(".cards__footer-name");
-const linkUrl = document.querySelector(".cards__item-image");
 
 const editButton = document.querySelector("#edit-button");
 const nameInput = document.querySelector("#text-input-name");
@@ -26,7 +27,7 @@ editButton.addEventListener("click", function openProfileEdit() {
   aboutInput.value = profileAbout.textContent;
 });
 
-const initialCards = [
+ const initialCards = [
   {
     placeName: "Valle de Yosemite",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
@@ -58,44 +59,16 @@ addButton.addEventListener("click", function openPlaceEdit(evt) {
   popupPlace.classList.add("popup_open");
 });
 
-function createCards(placeName, link) {
-  const cardTemplate = document.querySelector("#cards-template").content;
-  const cardElement = cardTemplate
-    .querySelector(".cards__item")
-    .cloneNode(true);
 
-  cardElement.querySelector(".cards__item-image").src = link;
-  cardElement.querySelector(".cards__footer-name").textContent = placeName;
-  cardElement.querySelector(".cards__item-image").alt = "Foto de " + placeName;
-
-  cardElement
-    .querySelector(".cards__delete")
-    .addEventListener("click", function (evt) {
-      evt.target.closest(".cards__item").remove();
-    });
-
-  const likeButton = cardElement.querySelector(".cards__footer-fav-button");
-  likeButton.addEventListener("click", function (evt) {
-    evt.target.classList.toggle("cards__footer-fav-button_active");
-  });
-
-  cardElement
-    .querySelector(".cards__item-image")
-    .addEventListener("click", function (evt) {
-      evt.preventDefault();
-      popupImage.classList.add("popup_open");
-      popupImage.querySelector(".popup__image").src = link;
-      popupImage.querySelector(".popup__title").textContent = placeName;
-      popupImage.querySelector(".popup__image").alt = placeName;
-    });
-
-  return cardElement;
-}
-
-initialCards.forEach((item) => {
-  const cardElement = createCards(item.placeName, item.link);
-  cardsContainer.append(cardElement);
+initialCards.forEach((card) => {
+  const newCard = new Card(card.placeName, card.link, "#cards-template");
+  const cardElement = newCard.createCard();
+  document.querySelector(".cards").append(cardElement);
 });
+
+
+
+
 
 function close() {
   popupProfile.classList.remove("popup_open");
@@ -133,8 +106,6 @@ function handlePlaceFormSubmit(evt) {
   cardsContainer.prepend(cardElement);
   popupPlace.classList.remove("popup_open");
 
-  // placeInput.value = "";
-  // linkInput.value = "";
 }
 
 popupPlace.addEventListener("submit", handlePlaceFormSubmit);
