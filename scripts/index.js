@@ -1,33 +1,25 @@
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
+import { openProfileEdit, openPlaceEdit } from "./utils.js";
 
 const popupPlace = document.querySelector(".popup-place");
-const addButton = document.querySelector("#add-button");
+const popupProfile = document.querySelector(".popup-profile");
+
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
-
-const editButton = document.querySelector("#edit-button");
 const nameInput = document.querySelector("#text-input-name");
 const aboutInput = document.querySelector("#text-input-about");
 const profileName = document.querySelector(".profile__info-name");
 const profileAbout = document.querySelector(".profile__info-description");
-const popupProfile = document.querySelector(".popup-profile");
+const addButton = document.querySelector("#add-button");
+const editButton = document.querySelector("#edit-button");
 
-const popupImage = document.querySelector("#image-popup");
+const fieldsetList = document.querySelector(".popup__container");
+
 const cardsContainer = document.querySelector(".cards");
 
-const closeButton = document.querySelectorAll(".popup__close-icon");
 
-const overlay = document.querySelectorAll(".popup__overlay");
-
-
-editButton.addEventListener("click", function openProfileEdit() {
-  popupProfile.classList.add("popup_open");
-  nameInput.value = profileName.textContent;
-  aboutInput.value = profileAbout.textContent;
-});
-
- const initialCards = [
+const initialCards = [
   {
     placeName: "Valle de Yosemite",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
@@ -54,42 +46,29 @@ editButton.addEventListener("click", function openProfileEdit() {
   },
 ];
 
-addButton.addEventListener("click", function openPlaceEdit(evt) {
-  evt.preventDefault();
-  popupPlace.classList.add("popup_open");
-});
-
-
 initialCards.forEach((card) => {
   const newCard = new Card(card.placeName, card.link, "#cards-template");
   const cardElement = newCard.createCard();
   document.querySelector(".cards").append(cardElement);
 });
 
+const newValidation = new FormValidator(
+  {
+    formSelector: document.querySelector(".popup__admin"),
+    inputSelector: document.querySelectorAll(".popup__input"),
+    submitButtonSelector: document.querySelector(".popup__button-save"),
+    inactiveButtonClass: document.querySelector("popup__button-save_disabled"),
+    inputErrorClass: document.querySelector("popup__input_type_error"),
+    errorClass: document.querySelector("popup__error_visible")
+  },
+  fieldsetList
+);
 
+newValidation.enableValidation();
 
+editButton.addEventListener("click", openProfileEdit);
 
-
-function close() {
-  popupProfile.classList.remove("popup_open");
-  popupPlace.classList.remove("popup_open");
-  popupImage.classList.remove("popup_open");
-}
-
-closeButton.forEach((item) => {
-  item.addEventListener("click", close);
-});
-
-overlay.forEach((item) => {
-  item.addEventListener("click", close);
-});
-
-document.addEventListener("keydown", function (evt) {
-  if(evt.key === "Escape"){
-     close();
-  }
-});
-
+addButton.addEventListener("click", openPlaceEdit);
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -102,10 +81,10 @@ popupProfile.addEventListener("submit", handleProfileFormSubmit);
 
 function handlePlaceFormSubmit(evt) {
   evt.preventDefault();
-  const cardElement = createCards(placeInput.value, linkInput.value);
+  const newCard = new Card(placeInput.value, linkInput.value, "#cards-template");
+  const cardElement = newCard.createCard();
   cardsContainer.prepend(cardElement);
   popupPlace.classList.remove("popup_open");
-
 }
 
 popupPlace.addEventListener("submit", handlePlaceFormSubmit);
