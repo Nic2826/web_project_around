@@ -38,20 +38,5 @@ export default class Popup{
             this.close()
         });
 
-
-        // const closeButton = document.querySelectorAll(".popup__close-icon");
-        // const overlay = document.querySelectorAll(".popup__overlay");
-
-        // console.log(closeButton);
-        // closeButton.forEach((item) => {
-            
-        //     item.addEventListener("click", this.close());
-        //   });
-
-        //   console.log(overlay);
-        //   overlay.forEach((item) => {
-        //     item.addEventListener("click", this.close());
-        //   });
-
     }
 }

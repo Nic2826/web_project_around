@@ -1,10 +1,11 @@
 
 export default class Card {
   //Se inicializan las variables
-  constructor(placeName, link, templateSelector) {
+  constructor(placeName, link, templateSelector, _handleCardClick) {
     this._placeName = placeName;
     this._link = link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = _handleCardClick;
   }
 
   //se trae el nodo del template que esta en html (el marcado)
@@ -51,19 +52,5 @@ export default class Card {
     const deleteButton = this._element.querySelector(".cards__delete");
     deleteButton.closest(".cards__item").remove();
   }
-
-
-  //esto funciona aquí pero no en PopupWithImage-----------------------------------------------------------
-  _handleCardClick() {
-    const popupImage = document.querySelector("#image-popup");
-
-    // evt.preventDefault();
-    
-    popupImage.classList.add("popup_open");
-    popupImage.querySelector(".popup__image").src = this._link;
-    popupImage.querySelector(".popup__title").textContent = this._placeName;
-    popupImage.querySelector(".popup__image").alt = this._placeName;
-  }
-
 }
 

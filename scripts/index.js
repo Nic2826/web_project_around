@@ -1,6 +1,5 @@
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
-// import { openProfileEdit, openPlaceEdit } from "./utils.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 
@@ -40,8 +39,13 @@ const initialCards = [
   },
 ];
 
-initialCards.forEach((card) => {
-  const newCard = new Card(card.placeName, card.link, "#cards-template");
+const PopupImage = new PopupWithImage(".popup-card");
+
+initialCards.forEach(({placeName, link}) => {
+  const newCard = new Card(placeName, link, "#cards-template", function handleCardClick(){
+    //el 4to parámetro llama al método Open de la clase PopupWithImage
+    PopupImage.open(placeName, link);
+  });
   const cardElement = newCard.createCard();
   document.querySelector(".cards").prepend(cardElement);
 });
@@ -62,19 +66,20 @@ newValidation.enableValidation();
 
 //crea una instancia de PopupWithForm
 const popupPlace = new PopupWithForm(".popup-place", ({title,link})=>{
-  const newCard = new Card(title, link, "#cards-template");
+  const newCard = new Card(title, link, "#cards-template", ()=>{
+    PopupImage.open(title, link);
+  });
   const cardElement = newCard.createCard();
   document.querySelector(".cards").prepend(cardElement);
   placeInput.textContent = title;
   linkInput.textContent = link;
-  
 });
 
 //no me funciona------------------------------------------------------------------------
 const popupProfile = new PopupWithForm(".popup-profile", ({name,about})=>{
+  console.log(name, about);
   nameInput.textContent = name;
   aboutInput.textContent = about;
-  console.log(name, about);
 });
 //---------------------------------------------------------
 
@@ -90,11 +95,6 @@ addButton.addEventListener("click", (evt) => {
   popupPlace.open();
 });
 
-
-// const popupImage = new PopupWithImage(".popup-card", this._handleCardClick);
-// querySelector(".cards__item-image").addEventListener("click", () => {
-//   popupImage.open();
-// });
 
 
 
