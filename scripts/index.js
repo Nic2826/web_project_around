@@ -1,23 +1,19 @@
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
-import { openProfileEdit, openPlaceEdit } from "./utils.js";
-
-const popupPlace = document.querySelector(".popup-place");
-const popupProfile = document.querySelector(".popup-profile");
+// import { openProfileEdit, openPlaceEdit } from "./utils.js";
+import PopupWithForm from "./PopupWithForm.js";
+import PopupWithImage from "./PopupWithImage.js";
 
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
 const nameInput = document.querySelector("#text-input-name");
 const aboutInput = document.querySelector("#text-input-about");
-const profileName = document.querySelector(".profile__info-name");
-const profileAbout = document.querySelector(".profile__info-description");
 const addButton = document.querySelector("#add-button");
 const editButton = document.querySelector("#edit-button");
+const closeButton = document.querySelectorAll(".popup__close-icon");
+const overlay = document.querySelectorAll(".popup__overlay");
 
 const fieldsetList = document.querySelector(".popup__container");
-
-const cardsContainer = document.querySelector(".cards");
-
 
 const initialCards = [
   {
@@ -49,7 +45,7 @@ const initialCards = [
 initialCards.forEach((card) => {
   const newCard = new Card(card.placeName, card.link, "#cards-template");
   const cardElement = newCard.createCard();
-  document.querySelector(".cards").append(cardElement);
+  document.querySelector(".cards").prepend(cardElement);
 });
 
 const newValidation = new FormValidator(
@@ -66,26 +62,58 @@ const newValidation = new FormValidator(
 
 newValidation.enableValidation();
 
-editButton.addEventListener("click", openProfileEdit);
-
-addButton.addEventListener("click", openPlaceEdit);
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileAbout.textContent = aboutInput.value;
-  popupProfile.classList.remove("popup_open");
-}
-
-popupProfile.addEventListener("submit", handleProfileFormSubmit);
-
-function handlePlaceFormSubmit(evt) {
-  evt.preventDefault();
-  const newCard = new Card(placeInput.value, linkInput.value, "#cards-template");
+//crea una instancia de PopupWithForm
+const popupPlace = new PopupWithForm(".popup-place", ({title,link})=>{
+  const newCard = new Card(title, link, "#cards-template");
   const cardElement = newCard.createCard();
-  cardsContainer.prepend(cardElement);
-  popupPlace.classList.remove("popup_open");
-}
+  document.querySelector(".cards").prepend(cardElement);
+  placeInput.textContent = title;
+  linkInput.textContent = link;
+  
+});
 
-popupPlace.addEventListener("submit", handlePlaceFormSubmit);
+//no me funciona------------------------------------------------------------------------
+const popupProfile = new PopupWithForm(".popup-profile", ({name,about})=>{
+  nameInput.textContent = name;
+  aboutInput.textContent = about;
+  console.log(name, about);
+});
+//---------------------------------------------------------
+
+popupPlace.setEventListeners();
+popupProfile.setEventListeners();
+
+editButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  popupProfile.open();
+});
+
+addButton.addEventListener("click", (evt) => {
+  placeInput.value = "";
+  linkInput.value = "";
+  evt.preventDefault();
+  popupPlace.open();
+});
+
+
+const popupImage = new PopupWithImage(".popup-card", this._handleCardClick);
+// querySelector(".cards__item-image").addEventListener("click", () => {
+//   popupImage.open();
+// });
+
+
+closeButton.forEach((item) => {
+  item.addEventListener("click", () => {
+    popupProfile.close();
+    popupPlace.close();
+  });
+});
+
+
+overlay.forEach((item) => {
+  item.addEventListener("click", () => {
+    popupProfile.close();
+    popupPlace.close();
+  });
+});
 
