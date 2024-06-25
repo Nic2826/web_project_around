@@ -3,7 +3,7 @@ import Popup from "./Popup.js";
 export default class PopupWithImage extends Popup {
     constructor(popupSelector, handleCardClick) {
         super(popupSelector);
-        this._handleCardClick = handleCardClick;
+        this._handleCardClick = handleCardClick.bind(this);
     }
 
     open(placeName, link) {
@@ -17,8 +17,6 @@ export default class PopupWithImage extends Popup {
         popupImage.querySelector(".popup__title").textContent = placeName;
     }
 
-
-//no es claro
     setEventListeners() {
         super.setEventListeners();
       }

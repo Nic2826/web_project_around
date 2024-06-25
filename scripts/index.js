@@ -72,9 +72,10 @@ const popupPlace = new PopupWithForm(".popup-place", ({title,link})=>{
 
 //no me funciona------------------------------------------------------------------------
 const popupProfile = new PopupWithForm(".popup-profile", ({name,about})=>{
+  console.log(name, about);
   nameInput.textContent = name;
   aboutInput.textContent = about;
-  console.log(name, about);
+  
 });
 //---------------------------------------------------------
 
