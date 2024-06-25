@@ -35,6 +35,8 @@ export default class Card {
 //esto funciona aquí pero no en PopupWithImage-----------------------------------------------------------
     //detector de evento para cuando se da click a una imagen
     this._element.querySelector(".cards__item-image").addEventListener("click", () => {
+      
+      console.log("se abre la imagen");
       this._handleCardClick()});
 
     return this._element;
@@ -56,6 +58,7 @@ export default class Card {
     const popupImage = document.querySelector("#image-popup");
 
     // evt.preventDefault();
+    
     popupImage.classList.add("popup_open");
     popupImage.querySelector(".popup__image").src = this._link;
     popupImage.querySelector(".popup__title").textContent = this._placeName;

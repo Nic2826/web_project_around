@@ -10,8 +10,6 @@ const nameInput = document.querySelector("#text-input-name");
 const aboutInput = document.querySelector("#text-input-about");
 const addButton = document.querySelector("#add-button");
 const editButton = document.querySelector("#edit-button");
-const closeButton = document.querySelectorAll(".popup__close-icon");
-const overlay = document.querySelectorAll(".popup__overlay");
 
 const fieldsetList = document.querySelector(".popup__container");
 
@@ -80,9 +78,6 @@ const popupProfile = new PopupWithForm(".popup-profile", ({name,about})=>{
 });
 //---------------------------------------------------------
 
-popupPlace.setEventListeners();
-popupProfile.setEventListeners();
-
 editButton.addEventListener("click", (evt) => {
   evt.preventDefault();
   popupProfile.open();
@@ -96,24 +91,10 @@ addButton.addEventListener("click", (evt) => {
 });
 
 
-const popupImage = new PopupWithImage(".popup-card", this._handleCardClick);
+// const popupImage = new PopupWithImage(".popup-card", this._handleCardClick);
 // querySelector(".cards__item-image").addEventListener("click", () => {
 //   popupImage.open();
 // });
 
 
-closeButton.forEach((item) => {
-  item.addEventListener("click", () => {
-    popupProfile.close();
-    popupPlace.close();
-  });
-});
-
-
-overlay.forEach((item) => {
-  item.addEventListener("click", () => {
-    popupProfile.close();
-    popupPlace.close();
-  });
-});
 

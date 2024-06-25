@@ -17,8 +17,6 @@ export default class PopupWithImage extends Popup {
         popupImage.querySelector(".popup__title").textContent = placeName;
     }
 
-    
-
 
 //no es claro
     setEventListeners() {
