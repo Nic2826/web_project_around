@@ -2,6 +2,8 @@ import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
+import UserInfo from "./UserInfo.js";
+import Section from "./Section.js";
 
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
@@ -39,16 +41,25 @@ const initialCards = [
   },
 ];
 
+const newUserInfo = new UserInfo({
+  name: ".profile__info-name", 
+  about: ".profile__info-description"});
+  newUserInfo.setUserInfo("Jacques Costeau", "Explorador");
+
 const PopupImage = new PopupWithImage(".popup-card");
 
-initialCards.forEach(({placeName, link}) => {
-  const newCard = new Card(placeName, link, "#cards-template", function handleCardClick(){
-    //el 4to parámetro llama al método Open de la clase PopupWithImage
-    PopupImage.open(placeName, link);
-  });
-  const cardElement = newCard.createCard();
-  document.querySelector(".cards").prepend(cardElement);
-});
+const cardSection = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item.placeName, item.link, "#cards-template", () => {
+      PopupImage.open(item.placeName, item.link);
+    }); 
+    const cardElement = card.createCard();
+    cardSection.addItem(cardElement);
+  }
+}, ".cards");
+
+cardSection.renderItems();
 
 const newValidation = new FormValidator(
   {
@@ -66,7 +77,7 @@ newValidation.enableValidation();
 
 //crea una instancia de PopupWithForm
 const popupPlace = new PopupWithForm(".popup-place", ({title,link})=>{
-  const newCard = new Card(title, link, "#cards-template", ()=>{
+  const newCard = new Card(title, link, "#cards-template", function handleCardClick(){
     PopupImage.open(title, link);
   });
   const cardElement = newCard.createCard();
@@ -75,13 +86,14 @@ const popupPlace = new PopupWithForm(".popup-place", ({title,link})=>{
   linkInput.textContent = link;
 });
 
-//no me funciona------------------------------------------------------------------------
+
 const popupProfile = new PopupWithForm(".popup-profile", ({name,about})=>{
   console.log(name, about);
   nameInput.textContent = name;
   aboutInput.textContent = about;
+newUserInfo.setUserInfo(name, about);
+
 });
-//---------------------------------------------------------
 
 editButton.addEventListener("click", (evt) => {
   evt.preventDefault();

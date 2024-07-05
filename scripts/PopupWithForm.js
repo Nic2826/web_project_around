@@ -19,8 +19,7 @@ return this.formValues;
 
 setEventListeners(){
     super.setEventListeners();
-    // Por qué me sale error al colocarlo así?------------------------------
-    //this._formElement.addEventListener("submit",
+
     this._popupElement.querySelector(".popup__admin").addEventListener("submit", (evt)=>{
         evt.preventDefault;
         this._handleFormSubmit(this.getInputValues());

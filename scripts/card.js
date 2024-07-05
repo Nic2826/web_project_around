@@ -21,7 +21,6 @@ export default class Card {
   createCard() {
     this._element = this._getTemplate();
 
-    //
     this._element.querySelector(".cards__item-image").src = this._link;
     this._element.querySelector(".cards__footer-name").textContent = this._placeName;
     this._element.querySelector(".cards__item-image").alt = "Foto de " + this._placeName;
@@ -32,12 +31,8 @@ export default class Card {
     //detector de evento para cuando se da click al botón de eliminar
     this._element.querySelector(".cards__delete").addEventListener("click", () => this._delete());
 
-
-//esto funciona aquí pero no en PopupWithImage-----------------------------------------------------------
     //detector de evento para cuando se da click a una imagen
     this._element.querySelector(".cards__item-image").addEventListener("click", () => {
-      
-      console.log("se abre la imagen");
       this._handleCardClick()});
 
     return this._element;
