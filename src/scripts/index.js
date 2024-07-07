@@ -1,9 +1,26 @@
+import "../pages/index.css";
+import logo from "../images/logo.svg";
+import closeButton from "../images/close.png";
+import profile from "../images/profile.jpg";
+
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
+
+const imageLogo = document.querySelector(".header__logo");
+imageLogo.src = logo;
+
+const close = document.querySelectorAll(".popup__close-icon");
+close.forEach(item =>{
+  item.src = closeButton;
+})
+
+
+const profileImage = document.querySelector(".profile__avatar");
+profileImage.src = profile;
 
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
