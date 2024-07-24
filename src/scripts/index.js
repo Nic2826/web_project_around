@@ -1,14 +1,13 @@
 import "../pages/index.css";
 import logo from "../images/logo.svg";
 import closeButton from "../images/close.png";
-import profile from "../images/profile.jpg";
-
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
+import Api from "./Api.js";
 
 const imageLogo = document.querySelector(".header__logo");
 imageLogo.src = logo;
@@ -18,65 +17,24 @@ close.forEach(item =>{
   item.src = closeButton;
 })
 
-
-const profileImage = document.querySelector(".profile__avatar");
-profileImage.src = profile;
-
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
 const nameInput = document.querySelector("#text-input-name");
 const aboutInput = document.querySelector("#text-input-about");
 const addButton = document.querySelector("#add-button");
 const editButton = document.querySelector("#edit-button");
-
 const fieldsetList = document.querySelector(".popup__container");
 
-const initialCards = [
-  {
-    placeName: "Valle de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
-  },
-  {
-    placeName: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lake-louise.jpg",
-  },
-  {
-    placeName: "Montañas Calvas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/bald-mountains.jpg",
-  },
-  {
-    placeName: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
-  },
-  {
-    placeName: "Parque Nacional de la Vanoise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
-  },
-  {
-    placeName: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
-  },
-];
-
-const newUserInfo = new UserInfo({
-  name: ".profile__info-name", 
-  about: ".profile__info-description"});
-  newUserInfo.setUserInfo("Jacques Costeau", "Explorador");
-
-const PopupImage = new PopupWithImage(".popup-card");
-
-const cardSection = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = new Card(item.placeName, item.link, "#cards-template", () => {
-      PopupImage.open(item.placeName, item.link);
-    }); 
-    const cardElement = card.createCard();
-    cardSection.addItem(cardElement);
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/web_es_11",
+  headers: {
+    authorization: "96b4dc3c-0ccb-4f44-b22d-30d4ca64744f",
+    "Content-Type": "application/json"
   }
-}, ".cards");
+});
 
-cardSection.renderItems();
+//crea una instancia para abrir la imagen
+const PopupImage = new PopupWithImage(".popup-card"); 
 
 const newValidation = new FormValidator(
   {
@@ -92,24 +50,37 @@ const newValidation = new FormValidator(
 
 newValidation.enableValidation();
 
-//crea una instancia de PopupWithForm
-const popupPlace = new PopupWithForm(".popup-place", ({title,link})=>{
-  const newCard = new Card(title, link, "#cards-template", function handleCardClick(){
-    PopupImage.open(title, link);
-  });
-  const cardElement = newCard.createCard();
-  document.querySelector(".cards").prepend(cardElement);
-  placeInput.textContent = title;
-  linkInput.textContent = link;
+//crea una instancia de PopupWithForm para el Perfil
+const popupProfile = new PopupWithForm(".popup-profile", (inputs)=>{
+  console.log(inputs);
+    //Guarda la info del usuario en el servidor
+    api.updateUserInfo(inputs).then((result) => {
+      const newUserInfo = new UserInfo({
+        name: ".profile__info-name", 
+        about: ".profile__info-description",
+        avatar: ".profile__avatar"});
+        newUserInfo.setUserInfo(result.name, result.about, result.avatar);
+    });
+}); 
+
+//crea una instancia de PopupWithForm para los lugares
+const popupPlace = new PopupWithForm(".popup-place", (inputs)=>{
+  // Añadir Tarjeta nueva
+api.postCards(inputs.name, inputs.link).then((result) => {
+  const cardSection = new Section({
+    items: result,
+    renderer: (item) => {
+      const card = new Card(item, "#cards-template", () => {
+        PopupImage.open(item.name, item.link);
+      }); 
+      const cardElement = card.createCard();
+      cardSection.addItem(cardElement);
+    }
+  }, ".cards");
+  
+  cardSection.renderItems();
+  
 });
-
-
-const popupProfile = new PopupWithForm(".popup-profile", ({name,about})=>{
-  console.log(name, about);
-  nameInput.textContent = name;
-  aboutInput.textContent = about;
-newUserInfo.setUserInfo(name, about);
-
 });
 
 editButton.addEventListener("click", (evt) => {
@@ -125,5 +96,45 @@ addButton.addEventListener("click", (evt) => {
 });
 
 
+//se trae la INFO del usuario
+api.getUserInfo().then((result) => {
+    console.log(result);
+
+    const profileImage = document.querySelector(".profile__avatar");
+    profileImage.src = result.avatar;
+
+    const newUserInfo = new UserInfo({
+      name: ".profile__info-name", 
+      about: ".profile__info-description"});
+      newUserInfo.setUserInfo(result.name, result.about);
+  });
+
+//Se traen las CARDS con la información que está en el servidor
+  api.getInitialCards().then((result) => {
+    console.log(result);
+    const cardSection = new Section({
+      items: result,
+      renderer: (item) => {
+        const card = new Card(item.name, item.link,"#cards-template", () => {
+          PopupImage.open(item.name, item.link);
+        }); 
+        const cardElement = card.createCard();
+        cardSection.addItem(cardElement);
+      }
+    }, ".cards");
+    
+    cardSection.renderItems();
+  });
 
 
+// function likeCounter(){
+//   fetch("https://around.nomoreparties.co/v1/web_es_11/cards/likes", {
+//     method: "GET",
+//     headers: {
+//       authorization: "96b4dc3c-0ccb-4f44-b22d-30d4ca64744f"
+//     }
+//   })
+//     .then(res => res.json())
+// }
+
+// likeCounter();

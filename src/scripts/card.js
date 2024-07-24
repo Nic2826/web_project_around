@@ -1,8 +1,8 @@
 
 export default class Card {
   //Se inicializan las variables
-  constructor(placeName, link, templateSelector, _handleCardClick) {
-    this._placeName = placeName;
+  constructor(name, link, templateSelector, _handleCardClick) {
+    this._name = name;
     this._link = link;
     this._templateSelector = templateSelector;
     this._handleCardClick = _handleCardClick;
@@ -22,8 +22,8 @@ export default class Card {
     this._element = this._getTemplate();
 
     this._element.querySelector(".cards__item-image").src = this._link;
-    this._element.querySelector(".cards__footer-name").textContent = this._placeName;
-    this._element.querySelector(".cards__item-image").alt = "Foto de " + this._placeName;
+    this._element.querySelector(".cards__footer-name").textContent = this._name;
+    this._element.querySelector(".cards__item-image").alt = "Foto de " + this._name;
 
     //detector de evento para cuando se da click al botón de like
     this._element.querySelector(".cards__footer-fav-button").addEventListener("click", () => this._like());
@@ -48,4 +48,3 @@ export default class Card {
     deleteButton.closest(".cards__item").remove();
   }
 }
-
