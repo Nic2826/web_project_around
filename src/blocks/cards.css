@@ -29,6 +29,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 0;
+}
+
+.cards__footer-likes-number{
+  margin: 0;
+  text-align: center  ;
 }
 
 .cards__footer-name {

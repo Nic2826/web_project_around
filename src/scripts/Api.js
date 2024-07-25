@@ -44,7 +44,9 @@ export default class Api {
             headers: this.headers,
             body: JSON.stringify({
               name: data.name, 
-              about: data.about})
+              about: data.about,
+              avatar: data.avatar,
+              userId: data.userId})
           })
           .then(res => {
             if (res.ok) {
@@ -70,6 +72,5 @@ export default class Api {
           }).then(res => res.json())
     }
   
-    // otros métodos para trabajar con la API
   }
   
