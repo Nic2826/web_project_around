@@ -18,23 +18,4 @@ export function openPlaceEdit(evt) {
   popupCard.classList.add("popup_open");
 }
 
-// export function close() {
-//   popupProfile.classList.remove("popup_open");
-//   popupCard.classList.remove("popup_open");
-//   popupImage.classList.remove("popup_open");
-// }
-
-// closeButton.forEach((item) => {
-//   item.addEventListener("click", close);
-// });
-
-// overlay.forEach((item) => {
-//   item.addEventListener("click", close);
-// });
-
-// document.addEventListener("keydown", function (evt) {
-//   if (evt.key === "Escape") {
-//     close();
-//   }
-// });
 

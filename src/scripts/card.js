@@ -1,13 +1,18 @@
-import PopupWithForm from "./PopupWithForm.js";
-
+import PopupWithConfirmation from "./PopupWithConfirmation.js";
 export default class Card {
   //Se inicializan las variables
-  constructor(item, templateSelector, _handleCardClick) {
+  constructor(item, templateSelector, userId, _handleCardClick, handleCardDelete, handleAddLike, handleDeleteLike) {
     this._name = item.name;
     this._link = item.link;
     this._likes = item.likes;
+    this.owner = item.owner;
+    this._cardId = item._id;
+    this.userId = userId;
     this._templateSelector = templateSelector;
     this._handleCardClick = _handleCardClick;
+    this._handleCardDelete = handleCardDelete;
+    this._handleAddLike = handleAddLike;
+    this._handleDeleteLike = handleDeleteLike;
   }
 
   //se trae el nodo del template que esta en html (el marcado)
@@ -31,23 +36,34 @@ export default class Card {
     //detector de evento para cuando se da click al botón de like
     this._element.querySelector(".cards__footer-fav-button").addEventListener("click", () => this._like());
 
-    //detector de evento para cuando se da click al botón de eliminar
+    //detector de evento para cuando se da click al botón de eliminar-------------------
     this._element.querySelector(".cards__delete").addEventListener("click", () =>{ 
-      const popupConfirm = new PopupWithForm(".popup-confirm", ()=>{
-        
-      })
-      popupConfirm.open();
-      
-      const confirmDelete = document.querySelector(".popup__button-save-confirm");
-      confirmDelete.addEventListener("click", ()=>{
-        this._delete();
-      })
-    });
+      console.log(this._cardId)
+      const popupConfirm = new PopupWithConfirmation(".popup-confirm", () => {this._deleteCard()});
+      popupConfirm.open();     
+      });
+
+
+
+const hasUserLiked = this._likes.some((like) => like._id === this.userId);
+if (hasUserLiked){
+  this._handleDeleteLike(this._cardId);
+  this._like();
+} else {
+  this._handleAddLike(this._cardId);
+}
+
 
 
     //detector de evento para cuando se da click a una imagen
     this._element.querySelector(".cards__item-image").addEventListener("click", () => {
       this._handleCardClick()});
+
+      //Comparing ID's
+      // console.log("id",this.userId, "owner", this.owner._id)
+      if(this.userId !== this.owner._id){
+        this._element.querySelector(".cards__delete").remove();
+      }
 
     return this._element;
   }
@@ -57,9 +73,12 @@ export default class Card {
     activeLike.classList.toggle("cards__footer-fav-button_active");
   }
 
-  _delete() {
-    const deleteButton = this._element.querySelector(".cards__delete");
-    deleteButton.closest(".cards__item").remove();
+  _likeCounter(){
+    
+  }
+
+  _deleteCard() {
+    this._element.remove();
   }
 
 }

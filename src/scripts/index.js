@@ -5,6 +5,7 @@ import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupWithConfirmation from "./PopupWithConfirmation.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
 import Api from "./Api.js";
@@ -20,6 +21,10 @@ close.forEach(item =>{
 //crea una instancia para abrir la imagen
 const PopupImage = new PopupWithImage(".popup-card"); 
 
+// const PopupConfirm = new PopupWithConfirmation(".popup-confirm");
+// PopupConfirm.setEventListeners();
+
+
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
 const addButton = document.querySelector("#add-button");
@@ -27,13 +32,21 @@ const editButton = document.querySelector("#edit-button");
 const fieldsetList = document.querySelector(".popup__container");
 const profileImage = document.querySelector(".profile__avatar");
 const editAvatar = document.querySelector(".profile__avatar-edit");
-const Confirmation = document.querySelector(".popup-confirm");
+
+const newUserInfo = new UserInfo({
+  name: ".profile__info-name", 
+  about: ".profile__info-description",
+  avatar: ".profile__avatar",
+  userId: ""});
 
 editAvatar.addEventListener("click", (evt)=>{
   evt.preventDefault();
   const popupAvatar = new PopupWithForm(".popup-avatar", (inputs)=>{
-    console.log(inputs);
+    api.updateAvatar(inputs).then((result) => {
+      profileImage.src=result.avatar;
+    });
   })
+ 
   popupAvatar.open();
 })
 
@@ -61,22 +74,14 @@ newValidation.enableValidation();
 
 //crea una instancia de PopupWithForm para el Perfil
 const popupProfile = new PopupWithForm(".popup-profile", (inputs)=>{
-  
-    //Guarda la info del usuario en el servidor
+    //Guarda la info del NUEVO usuario en el servidor
     api.updateUserInfo(inputs).then((result) => {
-      
-      const newUserInfo = new UserInfo({
-        name: ".profile__info-name", 
-        about: ".profile__info-description",
-        avatar: ".profile__avatar",
-        id: result._id});
-        newUserInfo.setUserInfo(result.name, result.about, result.avatar, result._id);
-        console.log("update newUserInfo", newUserInfo);
+        newUserInfo.setUserInfo(result.name, result.about, result.avatar, result.id);
+        console.log("UPDATE user INFO------", result);
     });
 }); 
 
-//crea una instancia de PopupWithForm para los lugares
-
+//crea una instancia de PopupWithForm para los lugare
 
 editButton.addEventListener("click", (evt) => {
   evt.preventDefault();
@@ -85,29 +90,28 @@ editButton.addEventListener("click", (evt) => {
 
 
 
-
 //se trae la INFO del usuario
 api.getUserInfo().then((result) => {
-    profileImage.src = result.avatar;
-
-    const newUserInfo = new UserInfo({
-      name: ".profile__info-name", 
-      about: ".profile__info-description",
-      avatar: ".profile__avatar",
-      id: result._id});
-      newUserInfo.setUserInfo(result.name, result.about, result.avatar, result._id);
-      console.log("geet newUserInfo", newUserInfo);
+      newUserInfo.setUserInfo(result.name, result.about, result.avatar, result.id);
+      // console.log("USER INFO------", result);
+      // console.log(newUserInfo);
   });
-
+  
 //Se traen las CARDS con la información que está en el servidor
   api.getInitialCards().then((result) => {
     console.log("INITIALS------", result);
     const cardSection = new Section({
       items: result,
       renderer: (item) => {
-        const card = new Card(item, "#cards-template", () => {
-          PopupImage.open(item.name, item.link);
-        }); 
+        // cambiar el numero por el userID que si es--------------------------
+        const card = new Card(item, 
+          "#cards-template", 
+          "6d33406458dca5e1516f6399", 
+          () => {PopupImage.open(item.name, item.link);}, 
+          () => {},
+          () => {api.addLike(item._id)},
+          () => {api.deleteLike(item._id)}); 
+
         const cardElement = card.createCard();
         cardSection.addItem(cardElement);
       }
@@ -118,10 +122,10 @@ api.getUserInfo().then((result) => {
     const popupCard = new PopupWithForm(".popup-place", (inputs)=>{
       // Añadir Tarjeta nueva
     api.postCards(inputs).then((result) => {
-      const card = new Card(result, "#cards-template", () => {
-      }); 
+      const card = new Card(result, "#cards-template", "", () => {}, () =>{}); 
       const cardElement = card.createCard();
       cardSection.addCard(cardElement);
+      console.log("ADD CARD------", result);
     });
     });
 
