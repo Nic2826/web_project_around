@@ -32,12 +32,6 @@ export default class Card {
     this._element.querySelector(".cards__footer-name").textContent = this._name;
     this._element.querySelector(".cards__item-image").alt = "Foto de " + this._name;
 
-    //detector de evento para cuando se da click al botón de LIKE
-    const activeLike = this._element.querySelector(".cards__footer-fav-button")
-        activeLike.addEventListener("click", () => { this._handleLikes() });
-
-   
-
     //detector de evento para cuando se da click al botón de eliminar-------------------
     this._element.querySelector(".cards__delete").addEventListener("click", () => {
       console.log(this._cardId)
@@ -57,45 +51,43 @@ export default class Card {
     }
 
 
- //Contador de likes, si no hay likes no muestra numero
- this._element.querySelector(".cards__footer-likes-number").textContent = this._likes.length;
+    //Contador de likes, si no hay likes no muestra numero
+    this._element.querySelector(".cards__footer-likes-number").textContent = this._likes.length;
+
+    //detector de evento para cuando se da click al botón de LIKE
+    const activeLike = this._element.querySelector(".cards__footer-fav-button")
+    activeLike.addEventListener("click", () => { this._handleLikes() });
+
+
+    const hasUserLiked = this.hasLike();
+
+    if (hasUserLiked) {
+      activeLike.classList.add("cards__footer-fav-button_active");
+    }
 
     return this._element;
 
   }
 
-
-
-
   _handleLikes() {
-    
-    const hasUserLiked = this._likes.some((like) => like._id === this.userId);
-    // console.log(this.userId, this._likes, hasUserLiked);
-    //  console.log("le di click al boton like de la card:", this._cardId);
-    // this._element.querySelector(".cards__footer-fav-button").classList.toggle("cards__footer-fav-button_active");
-  
+
+    const hasUserLiked = this.hasLike();
+    this._element.querySelector(".cards__footer-fav-button").classList.toggle("cards__footer-fav-button_active");
 
     if (hasUserLiked) {
-      
-      // console.log("la card tenía un LIKe mio:");
-    return this._handleDeleteLike(this._cardId).then((result) => {
-     
-      
-      console.log("se QUITA mi like", result.likes);
-      this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;
-      this._element.querySelector(".cards__footer-fav-button").classList.remove("cards__footer-fav-button_active");
-      
-    })
 
-    }else{
-      console.log("NO hay like");
-      this._handleAddLike(this._cardId).then((result) => {
-        console.log("se AGREGA mi like",result.likes);
+      return this._handleDeleteLike(this._cardId).then((result) => {
+        // console.log("se QUITA mi like", result.likes);
         this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;
-        console.log("ahora SI hay like"); 
-        this._element.querySelector(".cards__footer-fav-button").classList.add("cards__footer-fav-button_active");
-      
-        });
+        this._likes = result.likes;
+      })
+
+    } else {
+      this._handleAddLike(this._cardId).then((result) => {
+        // console.log("se AGREGA mi like", result.likes);
+        this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;        
+        this._likes = result.likes;
+      });
     }
   }
 
@@ -104,10 +96,14 @@ export default class Card {
   _deleteCard() {
     this._element.remove();
     this._handleCardDelete(this._cardId).then((result) => {
-      // document.querySelector(".popup__button-save").textContent = "Guardando...";
       console.log("se ELIMINA la card:", result);
-     
+
     })
+  }
+
+  hasLike() {
+    return this._likes.some((like) => like._id === this.userId);
+
   }
 
 }

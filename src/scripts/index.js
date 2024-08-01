@@ -90,14 +90,14 @@ api.getUserInfo().then((user) => {
   editAvatar.addEventListener("click", (evt) => {
     //se trae la INFO del usuario
     evt.preventDefault();
-    const popupAvatar = new PopupWithForm(".popup-avatar", ({data}) => {
-    //  console.log(inputs);
+    const popupAvatar = new PopupWithForm(".popup-avatar", async (avatarData) => {
+     avatarData.avatar=avatarData.avatarLink;
+     
 
-     return api.updateAvatar(data).then((result) => {
-      //  newUserInfo.getUserInfo().avatar = result.avatar;
-      //  profileImage.src = result;
-       console.log(profileImage.src);
-       console.log("avatarnew", result);
+     return await api.updateAvatar(avatarData).then((result) => {
+       profileImage.src = result.avatar;
+       
+
      })
     })
     popupAvatar.open();
