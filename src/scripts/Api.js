@@ -4,58 +4,60 @@ export default class Api {
     this.headers = options.headers;
   }
 
-  getInitialCards() {
-    return fetch(`${this.baseUrl}/cards`, {
+  async getInitialCards() {
+    return await fetch(`${this.baseUrl}/cards`, {
       method: "GET",
       headers: this.headers,
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        // si el servidor devuelve un error, rechaza el promise
-        return Promise.reject(`Error: ${res.status}`)
-          .catch((err) => {
-            console.log(err); // registra el error en la consola
-          });
-      })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .catch((err) => {
+      console.log(err); // registra el error en la consola
+    });
 
   }
 
   async getUserInfo() {
-    const res = await fetch(`${this.baseUrl}/users/me`, {
+    return await fetch(`${this.baseUrl}/users/me`, {
       method: "GET",
       headers: this.headers,
     })
-    return await res.json();
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .catch((err) => {
+      console.log(err); // registra el error en la consola
+    });
   }
 
   async updateUserInfo(data) {
-    const res = await fetch(`${this.baseUrl}/users/me`, {
+    return await fetch(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about,
         avatar: data.avatar,
-        userId: data._id
+        _id: data._id
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        // si el servidor devuelve un error, rechaza el promise
-        return Promise.reject(`Error: ${res.status}`)
-          .catch((err) => {
-            console.log(err); // registra el error en la consola
-          });
-      })
-    // return await res.json();
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .catch((err) => {
+      console.log(err); // registra el error en la consola
+    });
   }
 
-  async updateAvatar(data) {
-    const res = await fetch(`${this.baseUrl}/users/me/avatar`, {
+   async updateAvatar(data) {
+    return await fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
@@ -66,17 +68,15 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        // si el servidor devuelve un error, rechaza el promise
-        return Promise.reject(`Error: ${res.status}`)
-          .catch((err) => {
-            console.log(err); // registra el error en la consola
-          });
+          
       })
-    // return await res.json();
+      .catch((err) => {
+        console.log(err); // registra el error en la consola
+      });
   }
 
-  async postCards(card) {
-    const res = await fetch(`${this.baseUrl}/cards`, {
+   postCards(card) {
+    return  fetch(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
@@ -84,29 +84,33 @@ export default class Api {
         link: card.link,
       })
     })
-
-     return await res.json();
-  }
-
-  async deleteCard(cardId) {
-    const res = await fetch(`${this.baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: this.headers,
-    }).then(res => {
+    .then(res => {
       if (res.ok) {
         return res.json();
       }
-      // si el servidor devuelve un error, rechaza el promise
-      return Promise.reject(`Error: ${res.status}`)
-        .catch((err) => {
-          console.log(err); // registra el error en la consola
-        });
     })
-    // return await res.json();
+    .catch((err) => {
+      console.log(err); // registra el error en la consola
+    });
   }
 
-   addLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+   async deleteCard(cardId) {
+    return await fetch(`${this.baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .catch((err) => {
+      console.log(err); // registra el error en la consola
+    });
+  }
+
+   async addLike(cardId) {
+    return await fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: this.headers,
     }).then(res => {
@@ -125,15 +129,14 @@ export default class Api {
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
       headers: this.headers,
-    }).then(res => {
+    })
+    .then(res => {
       if (res.ok) {
         return res.json();
       }
-      // si el servidor devuelve un error, rechaza el promise
-      return Promise.reject(`Error: ${res.status}`)
-        .catch((err) => {
-          console.log(err); // registra el error en la consola
-        });
     })
+    .catch((err) => {
+      console.log(err); // registra el error en la consola
+    });
   }
 }

@@ -14,12 +14,12 @@ const imageLogo = document.querySelector(".header__logo");
 imageLogo.src = logo;
 
 const close = document.querySelectorAll(".popup__close-icon");
-close.forEach(item =>{
+close.forEach(item => {
   item.src = closeButton;
 })
 
 //crea una instancia para abrir la imagen
-const PopupImage = new PopupWithImage(".popup-card"); 
+const PopupImage = new PopupWithImage(".popup-card");
 
 // const PopupConfirm = new PopupWithConfirmation(".popup-confirm");
 // PopupConfirm.setEventListeners();
@@ -30,25 +30,15 @@ const linkInput = document.querySelector("#url-input");
 const addButton = document.querySelector("#add-button");
 const editButton = document.querySelector("#edit-button");
 const fieldsetList = document.querySelector(".popup__container");
-const profileImage = document.querySelector(".profile__avatar");
 const editAvatar = document.querySelector(".profile__avatar-edit");
+const profileImage = document.querySelector(".profile__avatar");
 
 const newUserInfo = new UserInfo({
-  name: ".profile__info-name", 
+  name: ".profile__info-name",
   about: ".profile__info-description",
   avatar: ".profile__avatar",
-  userId: ""});
-
-editAvatar.addEventListener("click", (evt)=>{
-  evt.preventDefault();
-  const popupAvatar = new PopupWithForm(".popup-avatar", (inputs)=>{
-    api.updateAvatar(inputs).then((result) => {
-      profileImage.src=result.avatar;
-    });
-  })
- 
-  popupAvatar.open();
-})
+  userId: ""
+});
 
 const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/web_es_11",
@@ -72,14 +62,18 @@ const newValidation = new FormValidator(
 
 newValidation.enableValidation();
 
+
+
+
+
 //crea una instancia de PopupWithForm para el Perfil
-const popupProfile = new PopupWithForm(".popup-profile", (inputs)=>{
-    //Guarda la info del NUEVO usuario en el servidor
-    api.updateUserInfo(inputs).then((result) => {
-        newUserInfo.setUserInfo(result.name, result.about, result.avatar, result.id);
-        console.log("UPDATE user INFO------", result);
-    });
-}); 
+const popupProfile = new PopupWithForm(".popup-profile", (inputs) => {
+  //Guarda la info del NUEVO usuario en el servidor
+  api.updateUserInfo(inputs).then((result) => {
+    newUserInfo.setUserInfo(result.name, result.about, result.avatar, result.id);
+    console.log("UPDATE user INFO------", result);
+  });
+});
 
 //crea una instancia de PopupWithForm para los lugare
 
@@ -89,50 +83,77 @@ editButton.addEventListener("click", (evt) => {
 });
 
 
-
-//se trae la INFO del usuario
-api.getUserInfo().then((result) => {
-      newUserInfo.setUserInfo(result.name, result.about, result.avatar, result.id);
-      // console.log("USER INFO------", result);
-      // console.log(newUserInfo);
+api.getUserInfo().then((user) => {
+  newUserInfo.setUserInfo(user.name, user.about, user.avatar, user._id);
   });
-  
-//Se traen las CARDS con la información que está en el servidor
-  api.getInitialCards().then((result) => {
-    console.log("INITIALS------", result);
+
+  editAvatar.addEventListener("click", (evt) => {
+    //se trae la INFO del usuario
+    evt.preventDefault();
+    const popupAvatar = new PopupWithForm(".popup-avatar", ({data}) => {
+    //  console.log(inputs);
+
+     return api.updateAvatar(data).then((result) => {
+      //  newUserInfo.getUserInfo().avatar = result.avatar;
+      //  profileImage.src = result;
+       console.log(profileImage.src);
+       console.log("avatarnew", result);
+     })
+    })
+    popupAvatar.open();
+  })
+
+
+  //Se traen las CARDS con la información que está en el servidor
+  api.getInitialCards().then((initCards) => {
     const cardSection = new Section({
-      items: result,
+      items: initCards,
       renderer: (item) => {
-        // cambiar el numero por el userID que si es--------------------------
-        const card = new Card(item, 
-          "#cards-template", 
-          "6d33406458dca5e1516f6399", 
-          () => {PopupImage.open(item.name, item.link);}, 
-          () => {},
-          () => {api.addLike(item._id)},
-          () => {api.deleteLike(item._id)}); 
+        // cambiar el numero por el _id que si es--------------------------
+        const card = new Card(item,
+          "#cards-template",
+          newUserInfo.getUserInfo().userId,
+          () => { PopupImage.open(item.name, item.link); },
+          () => { return api.deleteCard(item._id) },
+          () => { return api.addLike(item._id) },
+          () => { return api.deleteLike(item._id) });
 
         const cardElement = card.createCard();
         cardSection.addItem(cardElement);
+
       }
     }, ".cards");
-    
+
     cardSection.renderItems();
+  
+
+
+
 
     const popupCard = new PopupWithForm(".popup-place", (inputs)=>{
       // Añadir Tarjeta nueva
     api.postCards(inputs).then((result) => {
-      const card = new Card(result, "#cards-template", "", () => {}, () =>{}); 
+      const text = document.querySelectorAll(".popup__button-save")
+      text.textContent = "Guardando...";
+      
+      const card = new Card(
+        result,
+        "#cards-template", 
+        newUserInfo.getUserInfo().userId, 
+        () => { PopupImage.open(result.name, result.link); },
+        () => { api.deleteCard(result._id) },
+        () => { return api.addLike(result._id) },
+        () => { return api.deleteLike(result._id) });
       const cardElement = card.createCard();
       cardSection.addCard(cardElement);
       console.log("ADD CARD------", result);
     });
     });
 
-    addButton.addEventListener("click", (evt) => {
-      placeInput.value = "";
-      linkInput.value = "";
-      evt.preventDefault();
-      popupCard.open();
-    });
+  addButton.addEventListener("click", (evt) => {
+    placeInput.value = "";
+    linkInput.value = "";
+    evt.preventDefault();
+    popupCard.open();
   });
+});

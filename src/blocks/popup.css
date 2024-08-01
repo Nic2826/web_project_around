@@ -62,9 +62,6 @@
   visibility: visible;
 }
 
-.popup__input-about {
-  margin-top: 30px;
-}
 
 @media (hover: hover) {
   .popup__close-icon:hover {
@@ -91,7 +88,7 @@
   font-family: Inter;
   font-size: 24px;
   font-weight: 900;
-  margin: 34px 0 0;
+  margin: 34px 0 24px;
 }
 
 .popup__input {
@@ -101,12 +98,9 @@
   border: none;
   text-align: left;
   color: black;
-  width: 358px;
+  width: 354px;
   line-height: 30px;
-}
-
-.popup__heading{
-  margin-bottom: 54px;
+  margin-top: 30px;
 }
 
 .popup__input:valid {
@@ -118,15 +112,11 @@
 }
 
 .popup__input-link {
-  margin: 30px 0;
+  margin: 30px 0 0;
 }
 
 .popup__input-about {
-  margin: 30px 0;
-}
-
-.popup__input-avatar {
-  margin-bottom: 30px;
+  margin: 30px 0 0;
 }
 
 .popup__input-error {
@@ -134,12 +124,14 @@
   font-weight: 400;
   font-family: Inter;
   color: #FF0000;
+  /* margin-bottom: 30px; */
 }
 
 .popup__line {
   height: 1px;
   width: 358px;
   background-color: #c4c4c4;
+  /* margin-bottom: 30px; */
 }
 
 .popup__title {
@@ -163,9 +155,9 @@
   border: none;
   color: white;
   background-color: black;
-  /* margin-top: 38px; */
   border-radius: 2px;
   cursor: pointer;
+  margin-top: 30px;
 }
 
 .popup__button-save_inactive {
@@ -194,10 +186,6 @@
     width: 238px;
   }
 
-  .popup__input {
-    width: 238px;
-  }
-
   .popup__admin {
     margin: 0 0 0 22px;
   }
@@ -209,11 +197,6 @@
   .popup__line {
     width: 238px;
     margin-top: 9px;
-  }
-
-  .popup__button-save {
-    height: 46px;
-    width: 238px;
   }
 
   .popup__button-save_inactive {

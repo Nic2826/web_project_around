@@ -3,14 +3,14 @@ export default class UserInfo {
       this._name = document.querySelector(name);
       this._about = document.querySelector(about);
       this.avatar = document.querySelector(avatar);
-      this._userId = userId;
+      this.userId = userId;
     }
     getUserInfo() {
       return {
         name: this._name.textContent,
         about: this._about.textContent,
         avatar: this.avatar.src,
-        userId: this._userId
+        userId: this.userId
       };
     }
     setUserInfo(name, about, avatar, userId) {
