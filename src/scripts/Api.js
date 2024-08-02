@@ -104,6 +104,9 @@ export default class Api {
         return res.json();
       }
     })
+    .then((result) => {
+      console.log("api",result);
+    })
     .catch((err) => {
       console.log(err); // registra el error en la consola
     });

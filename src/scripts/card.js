@@ -1,4 +1,3 @@
-import PopupWithConfirmation from "./PopupWithConfirmation.js";
 export default class Card {
   //Se inicializan las variables
   constructor(item, templateSelector, userId, _handleCardClick, handleCardDelete, handleAddLike, handleDeleteLike) {
@@ -10,9 +9,11 @@ export default class Card {
     this.userId = userId;
     this._templateSelector = templateSelector;
     this._handleCardClick = _handleCardClick;
-    this._handleCardDelete = handleCardDelete;
+   this._handleCardDelete = handleCardDelete;
     this._handleAddLike = handleAddLike;
     this._handleDeleteLike = handleDeleteLike;
+    
+    // this._handleCardConfirm = handleCardConfirm;
   }
 
   //se trae el nodo del template que esta en html (el marcado)
@@ -34,9 +35,8 @@ export default class Card {
 
     //detector de evento para cuando se da click al botón de eliminar-------------------
     this._element.querySelector(".cards__delete").addEventListener("click", () => {
-      console.log(this._cardId)
-      const popupConfirm = new PopupWithConfirmation(".popup-confirm", () => { this._deleteCard() });
-      popupConfirm.open();
+      console.log("click en la caneca de", this._cardId)
+      this._deleteCard();
     });
 
     //detector de evento para cuando se da click a una imagen
@@ -55,9 +55,8 @@ export default class Card {
     this._element.querySelector(".cards__footer-likes-number").textContent = this._likes.length;
 
     //detector de evento para cuando se da click al botón de LIKE
-    const activeLike = this._element.querySelector(".cards__footer-fav-button")
-    activeLike.addEventListener("click", () => { this._handleLikes() });
-
+    const activeLike = this.heartToggle();
+        activeLike.addEventListener("click", () => { this._handleLikes() });
 
     const hasUserLiked = this.hasLike();
 
@@ -66,18 +65,16 @@ export default class Card {
     }
 
     return this._element;
-
   }
 
   _handleLikes() {
 
     const hasUserLiked = this.hasLike();
-    this._element.querySelector(".cards__footer-fav-button").classList.toggle("cards__footer-fav-button_active");
 
     if (hasUserLiked) {
-
       return this._handleDeleteLike(this._cardId).then((result) => {
         // console.log("se QUITA mi like", result.likes);
+        this.heartToggle().classList.toggle("cards__footer-fav-button_active");
         this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;
         this._likes = result.likes;
       })
@@ -85,25 +82,27 @@ export default class Card {
     } else {
       this._handleAddLike(this._cardId).then((result) => {
         // console.log("se AGREGA mi like", result.likes);
+        this.heartToggle().classList.toggle("cards__footer-fav-button_active");
         this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;        
         this._likes = result.likes;
+        
       });
     }
   }
 
-
-
   _deleteCard() {
-    this._element.remove();
-    this._handleCardDelete(this._cardId).then((result) => {
-      console.log("se ELIMINA la card:", result);
-
-    })
+    this._handleCardDelete(this._cardId);
+    // this._element.remove();
+  
   }
 
   hasLike() {
     return this._likes.some((like) => like._id === this.userId);
 
+  }
+
+  heartToggle() {
+    return this._element.querySelector(".cards__footer-fav-button");
   }
 
 }

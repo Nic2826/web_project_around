@@ -21,9 +21,6 @@ close.forEach(item => {
 //crea una instancia para abrir la imagen
 const PopupImage = new PopupWithImage(".popup-card");
 
-// const PopupConfirm = new PopupWithConfirmation(".popup-confirm");
-// PopupConfirm.setEventListeners();
-
 
 const placeInput = document.querySelector("#text-input-place");
 const linkInput = document.querySelector("#url-input");
@@ -44,7 +41,8 @@ const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/web_es_11",
   headers: {
     authorization: "96b4dc3c-0ccb-4f44-b22d-30d4ca64744f",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    'Cache-Control': 'no-cache'
   }
 });
 
@@ -61,10 +59,6 @@ const newValidation = new FormValidator(
 );
 
 newValidation.enableValidation();
-
-
-
-
 
 //crea una instancia de PopupWithForm para el Perfil
 const popupProfile = new PopupWithForm(".popup-profile", (inputs) => {
@@ -85,70 +79,76 @@ editButton.addEventListener("click", (evt) => {
 
 api.getUserInfo().then((user) => {
   newUserInfo.setUserInfo(user.name, user.about, user.avatar, user._id);
-  });
+});
 
-  editAvatar.addEventListener("click", (evt) => {
-    //se trae la INFO del usuario
-    evt.preventDefault();
-    const popupAvatar = new PopupWithForm(".popup-avatar", async (avatarData) => {
-     avatarData.avatar=avatarData.avatarLink;
-     
+editAvatar.addEventListener("click", (evt) => {
+  //se trae la INFO del usuario
+  evt.preventDefault();
+  const popupAvatar = new PopupWithForm(".popup-avatar", async (avatarData) => {
+    avatarData.avatar = avatarData.avatarLink;
 
-     return await api.updateAvatar(avatarData).then((result) => {
-       profileImage.src = result.avatar;
-       
-
-     })
+    api.updateAvatar(avatarData).then((result) => {
+      profileImage.src = result.avatar;
     })
-    popupAvatar.open();
   })
+  popupAvatar.open();
+})
 
 
-  //Se traen las CARDS con la información que está en el servidor
-  api.getInitialCards().then((initCards) => {
-    const cardSection = new Section({
-      items: initCards,
-      renderer: (item) => {
-        // cambiar el numero por el _id que si es--------------------------
-        const card = new Card(item,
-          "#cards-template",
-          newUserInfo.getUserInfo().userId,
-          () => { PopupImage.open(item.name, item.link); },
-          () => { return api.deleteCard(item._id) },
-          () => { return api.addLike(item._id) },
-          () => { return api.deleteLike(item._id) });
+//Se traen las CARDS con la información que está en el servidor
+api.getInitialCards().then((initCards) => {
 
-        const cardElement = card.createCard();
-        cardSection.addItem(cardElement);
+  const cardSection = new Section({
+    items: initCards,
+    renderer: (item) => {
+      const card = new Card(item,
+        "#cards-template",
+        newUserInfo.getUserInfo().userId,
+        () => { PopupImage.open(item.name, item.link); },
+        () => { const PopupConfirm = new PopupWithConfirmation(".popup-confirm", 
+          () => { api.deleteCard(item._id).then((result)=>{
+            return result;
+          });
+          });
+          PopupConfirm.open();
+         
+         },
+        () => { return api.addLike(item._id) },
+        () => { return api.deleteLike(item._id) },
+        );
 
-      }
-    }, ".cards");
-
-    cardSection.renderItems();
-  
+      const cardElement = card.createCard();
+      cardSection.addItem(cardElement);
 
 
+    }
+  }, ".cards");
+
+  cardSection.renderItems();
 
 
-    const popupCard = new PopupWithForm(".popup-place", (inputs)=>{
-      // Añadir Tarjeta nueva
+
+
+
+  const popupCard = new PopupWithForm(".popup-place", (inputs) => {
+    // Añadir Tarjeta nueva
     api.postCards(inputs).then((result) => {
       const text = document.querySelectorAll(".popup__button-save")
       text.textContent = "Guardando...";
-      
+
       const card = new Card(
         result,
-        "#cards-template", 
-        newUserInfo.getUserInfo().userId, 
+        "#cards-template",
+        newUserInfo.getUserInfo().userId,
         () => { PopupImage.open(result.name, result.link); },
-        () => { api.deleteCard(result._id) },
+        () => { },
         () => { return api.addLike(result._id) },
-        () => { return api.deleteLike(result._id) });
+        () => { return api.deleteLike(result._id) },
+        () => { return api.deleteCard(result._id) });
       const cardElement = card.createCard();
       cardSection.addCard(cardElement);
-      console.log("ADD CARD------", result);
     });
-    });
+  });
 
   addButton.addEventListener("click", (evt) => {
     placeInput.value = "";
