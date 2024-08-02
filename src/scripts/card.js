@@ -12,6 +12,7 @@ export default class Card {
    this._handleCardDelete = handleCardDelete;
     this._handleAddLike = handleAddLike;
     this._handleDeleteLike = handleDeleteLike;
+    this.removeCard = this.removeCard.bind(this);
     
     // this._handleCardConfirm = handleCardConfirm;
   }
@@ -35,7 +36,6 @@ export default class Card {
 
     //detector de evento para cuando se da click al botón de eliminar-------------------
     this._element.querySelector(".cards__delete").addEventListener("click", () => {
-      console.log("click en la caneca de", this._cardId)
       this._deleteCard();
     });
 
@@ -91,9 +91,7 @@ export default class Card {
   }
 
   _deleteCard() {
-    this._handleCardDelete(this._cardId);
-    // this._element.remove();
-  
+    this._handleCardDelete(this._cardId);  
   }
 
   hasLike() {
@@ -103,6 +101,10 @@ export default class Card {
 
   heartToggle() {
     return this._element.querySelector(".cards__footer-fav-button");
+  }
+
+  removeCard() {
+    this._element.remove();
   }
 
 }

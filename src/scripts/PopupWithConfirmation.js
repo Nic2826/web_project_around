@@ -6,7 +6,9 @@ export default class PopupWithConfirmation extends Popup {
         this.handleCardConfirm = handleCardConfirm;
     }
 
-    open() {
+    open(item, handleDelete) {
+        this.item = item;
+        this.handleDelete = handleDelete;
         super.open();
     }
 
@@ -14,18 +16,11 @@ export default class PopupWithConfirmation extends Popup {
         // super.open();
         const confirmButton = this._popupElement.querySelector(".popup__button-save-confirm");
         confirmButton.addEventListener("click", () => {
-            super.close();
-            console.log("CLICK");
+            // super.close();
+            this.handleCardConfirm(this.item, this.handleDelete, super.close());
         }
             
         );
-
-    }
-
-    confirm() {
-        // evt.preventDefault();
-        // console.log("aqui escucho el click del SI y lo cierro");
-        // super.close();
 
     }
 }

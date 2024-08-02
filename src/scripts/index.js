@@ -94,6 +94,13 @@ editAvatar.addEventListener("click", (evt) => {
   popupAvatar.open();
 })
 
+const PopupConfirm = new PopupWithConfirmation(".popup-confirm", 
+  (item, handleDelete, close) => { api.deleteCard(item._id).then((result)=>{
+    handleDelete();
+   close();
+  });
+}
+);
 
 //Se traen las CARDS con la información que está en el servidor
 api.getInitialCards().then((initCards) => {
@@ -105,14 +112,7 @@ api.getInitialCards().then((initCards) => {
         "#cards-template",
         newUserInfo.getUserInfo().userId,
         () => { PopupImage.open(item.name, item.link); },
-        () => { const PopupConfirm = new PopupWithConfirmation(".popup-confirm", 
-          () => { api.deleteCard(item._id).then((result)=>{
-            return result;
-          });
-          });
-          PopupConfirm.open();
-         
-         },
+        () => { PopupConfirm.open(item, card.removeCard);},
         () => { return api.addLike(item._id) },
         () => { return api.deleteLike(item._id) },
         );
@@ -133,15 +133,20 @@ api.getInitialCards().then((initCards) => {
   const popupCard = new PopupWithForm(".popup-place", (inputs) => {
     // Añadir Tarjeta nueva
     api.postCards(inputs).then((result) => {
-      const text = document.querySelectorAll(".popup__button-save")
-      text.textContent = "Guardando...";
+  
+      console.log("ADD CARD------", inputs.name);
+      // console.log("result --1--", result);
+      return result;
+      }).then((result) => {
+        // console.log("result --2--", result);
+      
 
       const card = new Card(
         result,
         "#cards-template",
         newUserInfo.getUserInfo().userId,
         () => { PopupImage.open(result.name, result.link); },
-        () => { },
+        () => { PopupConfirm.open(result, card.removeCard);},
         () => { return api.addLike(result._id) },
         () => { return api.deleteLike(result._id) },
         () => { return api.deleteCard(result._id) });
