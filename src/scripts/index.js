@@ -61,12 +61,23 @@ const newValidation = new FormValidator(
 newValidation.enableValidation();
 
 //crea una instancia de PopupWithForm para el Perfil
-const popupProfile = new PopupWithForm(".popup-profile", (inputs) => {
+const popupProfile = new PopupWithForm(".popup-profile", async (inputs) => {
   //Guarda la info del NUEVO usuario en el servidor
-  api.updateUserInfo(inputs).then((result) => {
+  const submitButton = document.querySelector(".popup__button-save-profile");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Guardando...";
+
+  try {
+    const result = await api.updateUserInfo(inputs);
     newUserInfo.setUserInfo(result.name, result.about, result.avatar, result.id);
-    console.log("UPDATE user INFO------", result);
-  });
+    popupProfile.close();
+  }
+  catch (error) {
+    console.error("Error editing the user:", error);
+  }
+  finally {
+    submitButton.textContent = originalButtonText;
+  }
 });
 
 //crea una instancia de PopupWithForm para los lugare
@@ -85,21 +96,45 @@ editAvatar.addEventListener("click", (evt) => {
   //se trae la INFO del usuario
   evt.preventDefault();
   const popupAvatar = new PopupWithForm(".popup-avatar", async (avatarData) => {
-    avatarData.avatar = avatarData.avatarLink;
+    const submitButton = document.querySelector(".popup__button-save-avatar");
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = "Guardando...";
 
-    api.updateAvatar(avatarData).then((result) => {
+    try {
+      avatarData.avatar = avatarData.avatarLink;
+      const result = await api.updateAvatar(avatarData);
       profileImage.src = result.avatar;
-    })
+
+    }
+    catch {
+
+    }
+    finally {
+      popupAvatar.close();
+      submitButton.textContent = originalButtonText;
+    }
   })
   popupAvatar.open();
 })
 
-const PopupConfirm = new PopupWithConfirmation(".popup-confirm", 
-  (item, handleDelete, close) => { api.deleteCard(item._id).then((result)=>{
-    handleDelete();
-   close();
-  });
-}
+const PopupConfirm = new PopupWithConfirmation(".popup-confirm",
+  async (item, handleDelete) => {
+    const confirmButton = document.querySelector(".popup__button-save-confirm");
+    const confirmButtonText = confirmButton.textContent;
+    confirmButton.textContent = "Eliminando...";
+
+    try {
+      await api.deleteCard(item._id)
+      handleDelete();
+    }
+    catch {
+      console.error("Error deleting card:", error);
+    }
+    finally {
+      PopupConfirm.close();
+      confirmButton.textContent = confirmButtonText;
+    }
+  }
 );
 
 //Se traen las CARDS con la información que está en el servidor
@@ -112,47 +147,51 @@ api.getInitialCards().then((initCards) => {
         "#cards-template",
         newUserInfo.getUserInfo().userId,
         () => { PopupImage.open(item.name, item.link); },
-        () => { PopupConfirm.open(item, card.removeCard);},
+        () => { PopupConfirm.open(item, card.removeCard); },
         () => { return api.addLike(item._id) },
         () => { return api.deleteLike(item._id) },
-        );
+      );
 
       const cardElement = card.createCard();
       cardSection.addItem(cardElement);
-
-
     }
   }, ".cards");
 
   cardSection.renderItems();
 
 
+  const popupCard = new PopupWithForm(".popup-place", async (inputs) => {
+    console.log(submitButton);
+    // evt.preventDefault();
+    const submitButton = document.querySelector(".popup__button-save-place");
+    const originalButtonText = submitButton.textContent;
 
+    submitButton.textContent = "Guardando...";
 
+    console.log(submitButton);
 
-  const popupCard = new PopupWithForm(".popup-place", (inputs) => {
-    // Añadir Tarjeta nueva
-    api.postCards(inputs).then((result) => {
-  
-      console.log("ADD CARD------", inputs.name);
-      // console.log("result --1--", result);
-      return result;
-      }).then((result) => {
-        // console.log("result --2--", result);
-      
-
+    try {
+      const result = await api.postCards(inputs);
       const card = new Card(
         result,
         "#cards-template",
         newUserInfo.getUserInfo().userId,
         () => { PopupImage.open(result.name, result.link); },
-        () => { PopupConfirm.open(result, card.removeCard);},
-        () => { return api.addLike(result._id) },
-        () => { return api.deleteLike(result._id) },
-        () => { return api.deleteCard(result._id) });
+        () => { PopupConfirm.open(result, card.removeCard); },
+        () => { return api.addLike(result._id); },
+        () => { return api.deleteLike(result._id); },
+      );
+
       const cardElement = card.createCard();
       cardSection.addCard(cardElement);
-    });
+      popupCard.close();
+
+    } catch (error) {
+      console.error("Error creating card:", error);
+    }
+    finally {
+      submitButton.textContent = originalButtonText;
+    }
   });
 
   addButton.addEventListener("click", (evt) => {
@@ -160,5 +199,6 @@ api.getInitialCards().then((initCards) => {
     linkInput.value = "";
     evt.preventDefault();
     popupCard.open();
+
   });
 });

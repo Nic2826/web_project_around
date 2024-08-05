@@ -23,7 +23,6 @@ setEventListeners(){
     this._popupElement.querySelector(".popup__admin").addEventListener("submit", (evt)=>{
         evt.preventDefault;
         this._handleFormSubmit(this.getInputValues());
-        super.close();
     });
 }
 

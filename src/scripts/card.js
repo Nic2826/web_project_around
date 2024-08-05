@@ -9,11 +9,11 @@ export default class Card {
     this.userId = userId;
     this._templateSelector = templateSelector;
     this._handleCardClick = _handleCardClick;
-   this._handleCardDelete = handleCardDelete;
+    this._handleCardDelete = handleCardDelete;
     this._handleAddLike = handleAddLike;
     this._handleDeleteLike = handleDeleteLike;
     this.removeCard = this.removeCard.bind(this);
-    
+
     // this._handleCardConfirm = handleCardConfirm;
   }
 
@@ -56,7 +56,7 @@ export default class Card {
 
     //detector de evento para cuando se da click al botón de LIKE
     const activeLike = this.heartToggle();
-        activeLike.addEventListener("click", () => { this._handleLikes() });
+    activeLike.addEventListener("click", () => { this._handleLikes() });
 
     const hasUserLiked = this.hasLike();
 
@@ -83,15 +83,11 @@ export default class Card {
       this._handleAddLike(this._cardId).then((result) => {
         // console.log("se AGREGA mi like", result.likes);
         this.heartToggle().classList.toggle("cards__footer-fav-button_active");
-        this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;        
+        this._element.querySelector(".cards__footer-likes-number").textContent = result.likes.length;
         this._likes = result.likes;
-        
+
       });
     }
-  }
-
-  _deleteCard() {
-    this._handleCardDelete(this._cardId);  
   }
 
   hasLike() {
@@ -101,6 +97,10 @@ export default class Card {
 
   heartToggle() {
     return this._element.querySelector(".cards__footer-fav-button");
+  }
+
+  _deleteCard() {
+    this._handleCardDelete(this._cardId);
   }
 
   removeCard() {

@@ -61,7 +61,7 @@
 
             <div class="popup__line"></div>
             <span class="popup__input-error text-input-about-error"></span>
-            <button class="popup__button-save" type="submit" value="Crear" disabled>Crear</button>
+            <button class="popup__button-save popup__button-save-profile" type="submit" value="Crear" disabled>Crear</button>
           </fieldset>
         </div>
       </form>
@@ -143,7 +143,12 @@
       </form>
     </div>
   </div>
-
+<!-- ------------------------CONTENEDOR LOADER---------------------- -->
+ <div class="loader-container">
+    <div 
+    class="loader">
+    </div>
+ </div>
 
   <template id="cards-template">
     <div class="cards__item">
@@ -158,7 +163,13 @@
       <button class="cards__delete" type="button"></button>
     </div>
   </template>
-  <!-- <script src="scripts/index.js" type="module"></script> -->
+  <script>
+    window.onload = () => {
+      const loader = document.querySelector(".loader-container");
+      loader.style.visibility = "hidden";
+      loader.style.opacity = "0";
+    };
+  </script>
 </body>
 
 </html>

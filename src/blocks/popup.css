@@ -124,7 +124,6 @@
   font-weight: 400;
   font-family: Inter;
   color: #FF0000;
-  /* margin-bottom: 30px; */
 }
 
 .popup__line {
@@ -182,7 +181,26 @@
     left: calc((100vw - 282px) / 2);
   }
 
+
+  .popup__content-confirm {
+    height: 181px;
+  }
+
+
+  .popup__container-input {
+    max-height: 330px;
+    max-width: 238px;
+  }
+
   .popup__input-container {
+    width: 238px;
+  }
+
+  .popup__button-save {
+    width: 238px;
+  }
+
+  .popup__input {
     width: 238px;
   }
 
@@ -196,7 +214,6 @@
 
   .popup__line {
     width: 238px;
-    margin-top: 9px;
   }
 
   .popup__button-save_inactive {

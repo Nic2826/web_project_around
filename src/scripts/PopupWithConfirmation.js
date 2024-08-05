@@ -13,13 +13,12 @@ export default class PopupWithConfirmation extends Popup {
     }
 
     setEventListeners() {
-        // super.open();
+        super.setEventListeners();
         const confirmButton = this._popupElement.querySelector(".popup__button-save-confirm");
         confirmButton.addEventListener("click", () => {
-            // super.close();
-            this.handleCardConfirm(this.item, this.handleDelete, super.close());
-        }
-            
+            // this.close();
+            this.handleCardConfirm(this.item, this.handleDelete);
+        }   
         );
 
     }

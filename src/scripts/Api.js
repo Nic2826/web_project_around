@@ -57,41 +57,44 @@ export default class Api {
   }
 
    async updateAvatar(data) {
-    return await fetch(`${this.baseUrl}/users/me/avatar`, {
+    const late = await fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
         avatar: data.avatar
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
+    return late.json();
+      // .then(res => {
+      //   if (res.ok) {
+      //     return res.json();
+      //   }
           
-      })
-      .catch((err) => {
-        console.log(err); // registra el error en la consola
-      });
+      // })
+      // .catch((err) => {
+      //   console.log(err); // registra el error en la consola
+      // });
   }
 
-   postCards(card) {
-    return  fetch(`${this.baseUrl}/cards`, {
+   async postCards(card) {
+   const late = await fetch(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
         name: card.name,
         link: card.link,
       })
+      
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((err) => {
-      console.log(err); // registra el error en la consola
-    });
+    return await late.json();
+    // .then( res => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    // })
+    // .catch((err) => {
+    //   console.log(err); // registra el error en la consola
+    // });
   }
 
    async deleteCard(cardId) {
@@ -125,14 +128,14 @@ export default class Api {
     })
   }
 
-   deleteLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+   async deleteLike(cardId) {
+     return await fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
       headers: this.headers,
     })
     .then(res => {
       if (res.ok) {
-        return res.json();
+        return  res.json();
       }
     })
     .catch((err) => {
