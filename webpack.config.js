@@ -55,5 +55,10 @@ module.exports = {
       template: "./src/index.html" // ruta a nuestro archivo index.html
     }),
     new MiniCssExtractPlugin()
-  ]
+  ],
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/web_project_around/'
+  }
 }
