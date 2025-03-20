@@ -9,6 +9,7 @@ import PopupWithConfirmation from "./PopupWithConfirmation.js";
 import UserInfo from "./UserInfo.js";
 import Section from "./Section.js";
 import Api from "./Api.js";
+import Loader from "./Loader.js";
 
 const imageLogo = document.querySelector(".header__logo");
 imageLogo.src = logo;
@@ -66,6 +67,7 @@ const popupProfile = new PopupWithForm(".popup-profile", async (inputs) => {
   const submitButton = document.querySelector(".popup__button-save-profile");
   const originalButtonText = submitButton.textContent;
   submitButton.textContent = "Guardando...";
+  Loader(".popup__button-save-profile");
 
   try {
     const result = await api.updateUserInfo(inputs);

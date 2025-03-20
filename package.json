@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Link para ver el proyecto en Git Hub Pages:\r https://nic2826.github.io/web_project_around",
   "main": "index.js",
+  "homepage": "https://nic2826.github.io/web_project_around",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve",
