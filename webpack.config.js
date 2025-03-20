@@ -9,8 +9,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: '[name].bundle.js',
-    publicPath: "",
+    filename: 'bundle.js',
+    publicPath: '/web_project_around/',
     clean: true,
   },
   target: ['web', 'es5'],
@@ -55,10 +55,5 @@ module.exports = {
       template: "./src/index.html" // ruta a nuestro archivo index.html
     }),
     new MiniCssExtractPlugin()
-  ],
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/web_project_around/'
-  }
+  ]
 }

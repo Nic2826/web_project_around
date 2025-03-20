@@ -1,4 +1,4 @@
-import "../pages/index.css";
+import "/src/index.css";
 import logo from "../images/logo.svg";
 import closeButton from "../images/close.png";
 import Card from "./card.js";
